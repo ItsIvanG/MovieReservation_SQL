@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="net.sf.ucanaccess" type="repository">
+    <properties maven-id="net.sf.ucanaccess:ucanaccess:5.0.1" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/ucanaccess-5.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/hsqldb-2.5.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jackcess-3.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-lang3-3.8.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-logging-1.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
