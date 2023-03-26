@@ -38,7 +38,7 @@
             <properties>
               <background color="-8421767"/>
               <enabled value="true"/>
-              <font size="28"/>
+              <font size="28" style="1"/>
               <foreground color="-396033"/>
               <text value="title"/>
             </properties>

@@ -28,8 +28,32 @@ public class Header {
     public boolean isAdmin=false;
     public JFrame frame;
     public String accountid;
+
+    public static void setUIFont(javax.swing.plaf.FontUIResource f) {
+        java.util.Enumeration keys = UIManager.getDefaults().keys();
+        while (keys.hasMoreElements()) {
+            Object key = keys.nextElement();
+            Object value = UIManager.get(key);
+            if (value instanceof javax.swing.plaf.FontUIResource)
+                UIManager.put(key, f);
+        }
+    }
     public Header() {
 
+//        try {
+//            // Set System L&F
+//            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+//
+//        }
+//        catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException |
+//               IllegalAccessException e) {
+//            System.out.println(e.getMessage());
+//        }
+
+        setUIFont((new javax.swing.plaf.FontUIResource("Inter", Font.PLAIN, 14))); // SET UI FONT
+        UIManager.put("Button.background", Color.white); //SET BUTTON BG TO WHITE
+
+//        UIManager.put("Panel.background", Color.white);
 
         Header h = this;
 
@@ -102,14 +126,8 @@ public class Header {
     }
 
     public static void main(String[] args) {
-        try {
-            // Set System L&F
-            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-        }
-        catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException |
-               IllegalAccessException e) {
-            System.out.println(e.getMessage());
-        }
+
+
         Header h = new Header();
         h.frame = new JFrame();
 

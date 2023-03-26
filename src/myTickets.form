@@ -52,9 +52,7 @@
                     <maximum-size width="400" height="800"/>
                   </grid>
                 </constraints>
-                <properties>
-                  <background color="-1"/>
-                </properties>
+                <properties/>
                 <border type="none"/>
                 <children>
                   <component id="daff6" class="javax.swing.JLabel">
