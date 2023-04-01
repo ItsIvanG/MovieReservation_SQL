@@ -15,8 +15,8 @@ public class SeatButton {
 
 
         try{ //GET TAKEN SEATS
-            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-            Connection conn = DriverManager.getConnection(connectionClass.connectionString);
+            // Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+            Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
 //            Statement st = conn.createStatement();
 
 //            String sql = "Select * from TICKET where show_id='"+SHOWID+"'";

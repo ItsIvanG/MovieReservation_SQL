@@ -47,21 +47,21 @@ public class Login {
     public void tryLogin(Header h,String email, String pass){
         System.out.println("Attempting login "+email+" | "+pass);
         try{
-//            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-            Connection conn = DriverManager.getConnection(connectionClass.connectionString);
-            PreparedStatement pst = conn.prepareStatement("Select * from account where account_email=? and password=?");
+//            // Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+            Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
+            PreparedStatement pst = conn.prepareStatement("Select * from account where account_email=? and account_password=?");
             pst.setString(1, email);
             pst.setString(2, pass);
 
             ResultSet rs = pst.executeQuery();
             boolean found=false;
             while(rs.next()){
-                JOptionPane.showMessageDialog(null, "Logged in as: "+rs.getString("account_name"));
+                JOptionPane.showMessageDialog(null, "Logged in as: "+rs.getString("account_fname"));
                 h.customerEmail=rs.getString("account_email");
-                h.customerName=rs.getString("account_name");
+                h.customerName=rs.getString("account_fname")+" "+rs.getString("account_lname");
                 h.customerContactNo=rs.getString("account_mobileno");
                 h.customerNameLabel.setText(h.customerName);
-                h.isAdmin=rs.getBoolean("admin");
+                h.isAdmin=rs.getBoolean("account_admin");
                 h.accountid=rs.getString("account_id");
 
                 h.seeMovieMenu(h);

@@ -38,8 +38,8 @@ public class ConfirmPurchase {
 
         /////get movie details
         try{
-            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-            Connection conn = DriverManager.getConnection(connectionClass.connectionString);
+            // Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+            Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
             PreparedStatement pst = conn.prepareStatement("Select * from MOVIE where MOVIE_ID=?");
 
             pst.setString(1, m);
@@ -66,7 +66,7 @@ public class ConfirmPurchase {
 
                 //cinema description
                 cinemaHallCode=rs.getString(5);
-                pstCinema=conn.prepareStatement("Select * from cinema_room where cinema_hall=?");
+                pstCinema=conn.prepareStatement("Select * from cinema_room where cinema_hallid=?");
                 pstCinema.setString(1,cinemaHallCode);
                 rsCinema = pstCinema.executeQuery();
                 while (rsCinema.next()) {
@@ -103,10 +103,10 @@ public class ConfirmPurchase {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try{
-                    Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+                    // Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
                     PreparedStatement pst;
                     ResultSet rs;
-                    Connection conn = DriverManager.getConnection(connectionClass.connectionString);
+                    Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
 
                     pst = conn.prepareStatement("select payment_id from payment");
                     rs = pst.executeQuery();
@@ -125,13 +125,11 @@ public class ConfirmPurchase {
                     LocalDateTime now = LocalDateTime.now();
                     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-                    pst = conn.prepareStatement("insert into payment(payment_id,payment_datetime,mode_of_payment,payment_amount,account_id) values (?,?,?,?,?)");
+                    pst = conn.prepareStatement("insert into payment(payment_id,mode_of_payment,payment_amount,account_id) values (?,?,?,?)");
                     pst.setString(1,Integer.toString(paymentID));
-                    System.out.println("Adding current date: "+dtf.format(now));
-                    pst.setString(2,dtf.format(now));
-                    pst.setString(3,paymentMethods[paymentMethodInt]);
-                    pst.setString(4,Double.toString(ticketsTotalPrice));
-                    pst.setString(5, h.accountid);
+                    pst.setString(2,paymentMethods[paymentMethodInt]);
+                    pst.setString(3,Double.toString(ticketsTotalPrice));
+                    pst.setString(4, h.accountid);
                     pst.execute();
                     System.out.println("PAYMENT RECORD ADDED");
 

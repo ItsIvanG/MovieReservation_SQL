@@ -52,8 +52,8 @@ public class MovieDetails {
 
 
         try{
-            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-            Connection conn = DriverManager.getConnection(connectionClass.connectionString);
+            // Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+            Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
             // GET MOVIE DETAILS
             PreparedStatement sql = conn.prepareStatement("Select * from movie where movie_id=?");
             sql.setString(1,movieCode);
@@ -92,8 +92,8 @@ public class MovieDetails {
                 timeBox.removeAllItems();
                 timeList.clear();
                 try{
-                    Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-                    Connection conn = DriverManager.getConnection(connectionClass.connectionString);
+                    // Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+                    Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
                     PreparedStatement sql = conn.prepareStatement("Select distinct show_time from show_time where movie_id=? and show_date=?");
                     sql.setString(1,movieCode);
                     sql.setString(2,dateList.get(dateBox.getSelectedIndex()));
@@ -120,9 +120,9 @@ public class MovieDetails {
                 hallList.clear();
 
                 try{
-                    Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-                    Connection conn = DriverManager.getConnection(connectionClass.connectionString);
-                    PreparedStatement pst = conn.prepareStatement("Select cinema_hall from show_time where movie_id=? and show_date=? and show_time=?");
+                    // Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+                    Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
+                    PreparedStatement pst = conn.prepareStatement("Select cinema_hallid from show_time where movie_id=? and show_date=? and show_time=?");
                     pst.setString(1,movieCode);
                     pst.setString(2,dateList.get(dateBox.getSelectedIndex()) );
                     pst.setString(3, timeList.get(timeBox.getSelectedIndex()));
@@ -133,7 +133,7 @@ public class MovieDetails {
                         /////////////list to box w description
                         System.out.println("LAST CINEMA HALL ADDED: "+hallList.get(hallList.size()-1));
 //                        String getCinemaDescCommand = "Select cinema_description from cinema_room where cinema_hall='"+hallList.get(hallList.size()-1)+"'";
-                        PreparedStatement pstCinemaHall = conn.prepareStatement("Select cinema_description from cinema_room where cinema_hall=?");
+                        PreparedStatement pstCinemaHall = conn.prepareStatement("Select cinema_description from cinema_room where cinema_hallid=?");
                         pstCinemaHall.setString(1, hallList.get(hallList.size()-1));
                         ResultSet rsCinemaHall = pstCinemaHall.executeQuery();
                         while(rsCinemaHall.next()){
@@ -153,8 +153,8 @@ public class MovieDetails {
                 caluclatePrice();
                 try
                 {
-                    Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-                    Connection conn = DriverManager.getConnection(connectionClass.connectionString);
+                    // Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+                    Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
 //                    Statement st = conn.createStatement();
                     ///GET CINEMA RATE
 //                    PreparedStatement sql = conn.prepareStatement("Select rateAdd from cinema_room where cinema_hall=?");
@@ -167,7 +167,7 @@ public class MovieDetails {
                     ticketPriceLabel.setText("Ticket price: ₱"+moviePrice);
 
 
-                    PreparedStatement sql = conn.prepareStatement("Select * from cinema_room where cinema_hall=?");
+                    PreparedStatement sql = conn.prepareStatement("Select * from cinema_room where cinema_hallid=?");
                     sql.setString(1,hallList.get(hallBox.getSelectedIndex()));
                     ResultSet rs = sql.executeQuery();
                     while(rs.next()){
@@ -182,7 +182,7 @@ public class MovieDetails {
                     seatsPanel.setBorder(BorderFactory.createEmptyBorder(50,100,50,100));
 
                     ///SET SHOWID
-                    sql = conn.prepareStatement("Select show_id from show_time where cinema_hall=? and movie_id=? and show_date=? and show_time=?");
+                    sql = conn.prepareStatement("Select show_id from show_time where cinema_hallid=? and movie_id=? and show_date=? and show_time=?");
                     sql.setString(1,hallList.get(hallBox.getSelectedIndex()));
                     sql.setString(2,movieCode);
                     sql.setString(3,dateList.get(dateBox.getSelectedIndex()));

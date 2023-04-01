@@ -30,7 +30,7 @@ public class editShowDialog extends JDialog {
         hourSpinner.setModel(hourModel);
         minuteSpin.setModel(minuteModel);
         try{
-            Connection conn = DriverManager.getConnection(connectionClass.connectionString);
+            Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
             PreparedStatement pst = conn.prepareStatement("select * from show_time where show_id=?");
             pst.setInt(1,showID);
             ResultSet rs = pst.executeQuery();
@@ -69,7 +69,7 @@ public class editShowDialog extends JDialog {
                 }
                 System.out.println(setTime);
                 try{
-                    Connection conn = DriverManager.getConnection(connectionClass.connectionString);
+                    Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
                     PreparedStatement pst = conn.prepareStatement("update show_time set show_time=?, movie_id=? where show_id=?");
                     pst.setTime(1, Time.valueOf(setTime));
                     pst.setString(2,movieList.get(movieCombo.getSelectedIndex()));
@@ -114,7 +114,7 @@ public class editShowDialog extends JDialog {
     private void onCancel(boolean isNew) {
         if(isNew){
             try{
-                Connection conn = DriverManager.getConnection(connectionClass.connectionString);
+                Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
                 PreparedStatement pst = conn.prepareStatement("delete from show_time where show_id=?");
                 pst.setInt(1,thisShowID);
                 pst.execute();

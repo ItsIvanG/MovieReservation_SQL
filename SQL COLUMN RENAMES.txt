@@ -1,0 +1,15 @@
+ACCOUNT
+
+Account_name > account_fname, account_mname, account_lname
+
+Password > Acccount_password
+
+Admin > Account_Admin
+
+
+
+CINEMA_ROOM
+
+Cinema_Hall > Cinema_HallID
+
++ Cinema_Rate

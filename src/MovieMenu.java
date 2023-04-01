@@ -22,8 +22,7 @@ public class MovieMenu {
 //        frame.setVisible(true);
 //        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         try{
-            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-            Connection conn = DriverManager.getConnection(connectionClass.connectionString);
+            Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
 
             PreparedStatement pst = conn.prepareStatement("Select * from movie");
 

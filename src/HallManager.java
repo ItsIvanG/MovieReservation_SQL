@@ -33,12 +33,12 @@ public class HallManager {
         });
 
         try{
-            Connection conn = DriverManager.getConnection(connectionClass.connectionString);
+            Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
             PreparedStatement pst = conn.prepareStatement("select * from cinema_room");
             ResultSet rs = pst.executeQuery();
             while(rs.next()){
-                hallwayCombobox.addItem("["+rs.getString("cinema_hall")+"] "+rs.getString("cinema_description"));
-                hallList.add(rs.getString("cinema_hall"));
+                hallwayCombobox.addItem("["+rs.getString("cinema_hallid")+"] "+rs.getString("cinema_description"));
+                hallList.add(rs.getString("cinema_hallid"));
             }
             hallwayCombobox.addItem("+ Add new hall...");
             System.out.println(hallList);
@@ -71,8 +71,8 @@ public class HallManager {
             public void actionPerformed(ActionEvent e) {
                 if(hallList.contains(hallcodeField.getText())){
                     try{
-                        Connection conn = DriverManager.getConnection(connectionClass.connectionString);
-                        PreparedStatement pst = conn.prepareStatement("update cinema_room set no_of_seats=?,cinema_description=?,seatsperrow=? where cinema_hall=?");
+                        Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
+                        PreparedStatement pst = conn.prepareStatement("update cinema_room set no_of_seats=?,cinema_description=?,seatsperrow=? where cinema_hallid=?");
                         pst.setInt(1, Integer.parseInt(hallNumberOfSeatsField.getText()));
                         pst.setString(2, hallDescField.getText());
                         pst.setInt(3,Integer.parseInt(hallSeatsPerRowField.getText()));
@@ -86,8 +86,8 @@ public class HallManager {
                     }
                 }else{
                     try{
-                        Connection conn = DriverManager.getConnection(connectionClass.connectionString);
-                        PreparedStatement pst = conn.prepareStatement("insert into cinema_room(cinema_hall,no_of_seats,cinema_description,seatsperrow) values(?,?,?,?)");
+                        Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
+                        PreparedStatement pst = conn.prepareStatement("insert into cinema_room(cinema_hallid,no_of_seats,cinema_description,seatsperrow) values(?,?,?,?)");
                         pst.setString(1, hallcodeField.getText());
                         pst.setInt(2, Integer.parseInt(hallNumberOfSeatsField.getText()));
                         pst.setString(3, hallDescField.getText());
@@ -106,8 +106,8 @@ public class HallManager {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try{
-                    Connection conn = DriverManager.getConnection(connectionClass.connectionString);
-                    PreparedStatement pst = conn.prepareStatement("delete from cinema_room where cinema_Hall=?");
+                    Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
+                    PreparedStatement pst = conn.prepareStatement("delete from cinema_room where cinema_Hallid=?");
                     pst.setString(1, hallList.get(hallwayCombobox.getSelectedIndex()));
 
                     pst.execute();
@@ -124,12 +124,12 @@ public class HallManager {
     }
     public void viewHallDetails(String id){
         try{
-            Connection conn = DriverManager.getConnection(connectionClass.connectionString);
-            PreparedStatement pst = conn.prepareStatement("select * from cinema_room where cinema_hall=?");
+            Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
+            PreparedStatement pst = conn.prepareStatement("select * from cinema_room where cinema_hallid=?");
             pst.setString(1, id);
             ResultSet rs = pst.executeQuery();
             while(rs.next()){
-                hallcodeField.setText(rs.getString("cinema_hall"));
+                hallcodeField.setText(rs.getString("cinema_hallid"));
                 hallDescField.setText(rs.getString("cinema_description"));
                 hallNumberOfSeatsField.setText(rs.getString("no_of_seats"));
                 hallSeatsPerRowField.setText(rs.getString("seatsperrow"));

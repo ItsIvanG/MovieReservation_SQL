@@ -37,12 +37,12 @@ public class ShowManage {
         datePanelFrame.add(datePicker);
 
         try{
-            Connection conn = DriverManager.getConnection(connectionClass.connectionString);
+            Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
             PreparedStatement pst = conn.prepareStatement("select * from cinema_room");
             ResultSet rs = pst.executeQuery();
             while(rs.next()){
-                hallwayCombobox.addItem("["+rs.getString("cinema_hall")+"] "+rs.getString("cinema_description"));
-                hallList.add(rs.getString("cinema_hall"));
+                hallwayCombobox.addItem("["+rs.getString("cinema_hallid")+"] "+rs.getString("cinema_description"));
+                hallList.add(rs.getString("cinema_hallid"));
             }
 
             System.out.println(hallList);
@@ -78,8 +78,8 @@ public class ShowManage {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try{
-                    Connection conn = DriverManager.getConnection(connectionClass.connectionString);
-                    PreparedStatement pst = conn.prepareStatement("insert into show_time (show_id, cinema_hall, show_date,show_time) values(?,?,?,?)");
+                    Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
+                    PreparedStatement pst = conn.prepareStatement("insert into show_time (show_id, cinema_hallid, show_date,show_time) values(?,?,?,?)");
                     pst.setInt(1, reservShowID);
                     pst.setString(2, hallList.get(hallwayCombobox.getSelectedIndex()));
                     pst.setString(3,String.valueOf(showDate));
@@ -98,8 +98,8 @@ public class ShowManage {
         showPanel.removeAll();
         showIDs.clear();
         try{
-            Connection conn = DriverManager.getConnection(connectionClass.connectionString);
-            PreparedStatement pst = conn.prepareStatement("select * from show_time where cinema_hall=? and show_date=? order by show_time");
+            Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
+            PreparedStatement pst = conn.prepareStatement("select * from show_time where cinema_hallid=? and show_date=? order by show_time");
             pst.setString(1,hallList.get(hallwayCombobox.getSelectedIndex()));
             pst.setString(2, String.valueOf(showDate));
             ResultSet rs = pst.executeQuery();

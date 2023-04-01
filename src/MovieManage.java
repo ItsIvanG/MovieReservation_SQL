@@ -36,7 +36,7 @@ public class MovieManage {
         });
 
         try{
-            Connection conn = DriverManager.getConnection(connectionClass.connectionString);
+            Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
             PreparedStatement pst = conn.prepareStatement("select * from movie");
             ResultSet rs = pst.executeQuery();
             while(rs.next()){
@@ -49,7 +49,10 @@ public class MovieManage {
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
-        viewMovieDetails(movieList.get(0));
+        if(movieList.size()>0){
+            viewMovieDetails(movieList.get(0));
+        }
+
 
         moviesCombobox.addActionListener(new ActionListener() {
             @Override
@@ -82,7 +85,7 @@ public class MovieManage {
                 if(movieList.contains(movieCodeField.getText())){///////////////////////////UPDATE
 
                     try{
-                        Connection conn = DriverManager.getConnection(connectionClass.connectionString);
+                        Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
                         PreparedStatement pst = conn.prepareStatement("update movie set movie_name=?, movie_description=?, movie_price=?, duration_minutes=?, movie_poster=? where movie_id=?");
                         pst.setString(1, movieTextField.getText());
                         pst.setString(2, movieDescField.getText());
@@ -98,7 +101,7 @@ public class MovieManage {
 
                 } else{///////////////////////////INSERT NEW
                     try{
-                        Connection conn = DriverManager.getConnection(connectionClass.connectionString);
+                        Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
                         PreparedStatement pst = conn.prepareStatement("insert into movie(movie_name, movie_description, movie_price, duration_minutes, movie_poster, movie_id) values(?,?,?,?,?,?)");
                         pst.setString(1, movieTextField.getText());
                         pst.setString(2, movieDescField.getText());
@@ -120,7 +123,7 @@ public class MovieManage {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try{
-                    Connection conn = DriverManager.getConnection(connectionClass.connectionString);
+                    Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
                     PreparedStatement pst = conn.prepareStatement("delete from movie where movie_id=?");
                     pst.setString(1,movieList.get(moviesCombobox.getSelectedIndex()));
 
@@ -138,7 +141,7 @@ public class MovieManage {
     }
     public void viewMovieDetails(String id){
         try{
-            Connection conn = DriverManager.getConnection(connectionClass.connectionString);
+            Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
             PreparedStatement pst = conn.prepareStatement("select * from movie where movie_Id=?");
             pst.setString(1, id);
             ResultSet rs = pst.executeQuery();

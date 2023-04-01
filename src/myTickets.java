@@ -45,8 +45,8 @@ public class myTickets {
         ticketPanel.setVisible(false);
         ticketList.setModel(ticketListModel);
         try { //// GET TICKETS
-            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-            Connection conn = DriverManager.getConnection(connectionClass.connectionString);
+            // Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+            Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
             PreparedStatement pst = conn.prepareStatement("select * from payment where account_id=?");
             pst.setString(1,accountid);
             ResultSet rs = pst.executeQuery();
@@ -140,8 +140,8 @@ public class myTickets {
                 showIDlabel.setText("Show ID: "+showIDs.get(ticketList.getSelectedIndex()));
 
                 try{
-                    Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-                    Connection conn = DriverManager.getConnection(connectionClass.connectionString);
+                    // Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+                    Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
                     PreparedStatement pst = conn.prepareStatement("Select * from payment where payment_id=?");
                     pst.setString(1,ticketsPurchaseIDs.get(ticketList.getSelectedIndex()));
                     ResultSet rs = pst.executeQuery();

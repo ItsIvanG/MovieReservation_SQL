@@ -63,6 +63,7 @@
             </constraints>
             <properties>
               <horizontalAlignment value="0"/>
+              <icon value="1x/Asset 6.png"/>
               <text value="Get Tickets"/>
             </properties>
           </component>

@@ -31,8 +31,8 @@ public class myPurchases {
         purchaseList.setModel(purchaseListModel);
 
         try{
-            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-            Connection conn = DriverManager.getConnection(connectionClass.connectionString);
+            // Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+            Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
             PreparedStatement pst = conn.prepareStatement("select * from payment where account_id=?");
             pst.setString(1, accountid);
             ResultSet rs = pst.executeQuery();
@@ -57,8 +57,8 @@ public class myPurchases {
             public void valueChanged(ListSelectionEvent e) {
                 seats.clear();
                 try {
-                    Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-                    Connection conn = DriverManager.getConnection(connectionClass.connectionString);
+                    // Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+                    Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
                     PreparedStatement pst = conn.prepareStatement("select * from payment where payment_id=?");
                     pst.setInt(1, purchaseIDs.get(purchaseList.getSelectedIndex()));
                     ResultSet rs = pst.executeQuery();

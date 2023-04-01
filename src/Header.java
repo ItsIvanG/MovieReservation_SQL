@@ -53,13 +53,14 @@ public class Header {
         setUIFont((new javax.swing.plaf.FontUIResource("Inter", Font.PLAIN, 14))); // SET UI FONT
         UIManager.put("Button.background", Color.white); //SET BUTTON BG TO WHITE
 
+
 //        UIManager.put("Panel.background", Color.white);
 
         Header h = this;
 
         Login loginstart = new Login(h);
         ///------------------------------------/AUTOLOGIN
-        loginstart.tryLogin(h, "ivan.gonzales@gmail.com","ivanpogi");
+        loginstart.tryLogin(h, "ivan.gonzales@gmail.com","pogi");
 
         registerButton.addActionListener(new ActionListener() {
             @Override

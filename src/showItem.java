@@ -16,7 +16,7 @@ public class showItem {
         System.out.println(showID+": "+ time);
 
         try{
-            Connection conn = DriverManager.getConnection(connectionClass.connectionString);
+            Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
             PreparedStatement pst = conn.prepareStatement("select * from movie where movie_id=?");
             pst.setString(1,movie);
             ResultSet rs = pst.executeQuery();
@@ -37,7 +37,7 @@ public class showItem {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try{
-                    Connection conn = DriverManager.getConnection(connectionClass.connectionString);
+                    Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
                     PreparedStatement pst = conn.prepareStatement("delete from show_time where show_id=?");
                     pst.setInt(1,showID);
                     pst.execute();
