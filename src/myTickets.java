@@ -92,8 +92,8 @@ public class myTickets {
                             ticketsMovies.add(rsMovie.getString("movie_name"));
                         }
                         ///// get cinema hall
-                        pstMovie=conn.prepareStatement("select cinema_description from cinema_room where cinema_hall=?");
-                        pstMovie.setString(1,rsShow.getString("cinema_hall"));
+                        pstMovie=conn.prepareStatement("select cinema_description from cinema_room where cinema_hallid=?");
+                        pstMovie.setString(1,rsShow.getString("cinema_hallid"));
                         rsMovie=pstMovie.executeQuery();
                         System.out.println("rsMovie2 success");
                         while(rsMovie.next()){

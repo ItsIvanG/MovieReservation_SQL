@@ -91,8 +91,8 @@ public class myPurchases {
                                     movieLabel.setText("Movie: "+rsMovie.getString("movie_name"));
                                 }
 
-                                PreparedStatement pstCinema = conn.prepareStatement("Select * from cinema_room where cinema_hall=?");
-                                pstCinema.setString(1,rsShow.getString("cinema_hall") );
+                                PreparedStatement pstCinema = conn.prepareStatement("Select * from cinema_room where cinema_hallid=?");
+                                pstCinema.setString(1,rsShow.getString("cinema_hallid") );
                                 ResultSet rsCinema = pstCinema.executeQuery();
                                 while (rsCinema.next()) {
                                     cinemaHallLabel.setText("Cinema hall: "+rsCinema.getString("cinema_description"));

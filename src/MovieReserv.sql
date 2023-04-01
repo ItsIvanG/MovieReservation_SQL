@@ -15,7 +15,7 @@ Account_Admin bit
 
 create table PAYMENT(
 Payment_ID int constraint paymentid_pk primary key,
-Payment_DateTime date default getdate(),
+Payment_DateTime datetime default getdate(),
 Mode_of_Payment varchar(20),
 Payment_Amount money,
 Account_ID int,
@@ -74,6 +74,8 @@ alter table payment
 add constraint accountid_fk foreign key (account_id) references account(account_id)
 
 
+insert into account values('ivan.gonzales@gmail.com','Ivan',null,'Gonzales','09991112222','pogi',1)
+insert into movie values('m1','Test movie','Test description','100','120',null,'G')
 
 
 drop table account,CINEMA_ROOM,movie,payment,show_time

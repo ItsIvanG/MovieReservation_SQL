@@ -122,7 +122,7 @@ public class MovieDetails {
                 try{
                     // Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
                     Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
-                    PreparedStatement pst = conn.prepareStatement("Select cinema_hallid from show_time where movie_id=? and show_date=? and show_time=?");
+                    PreparedStatement pst = conn.prepareStatement("Select cinema_hallid,cinema_description from cinema_room where cinema_hallid=(Select cinema_hallid from show_time where movie_id=? and show_date=? and show_time=?)");
                     pst.setString(1,movieCode);
                     pst.setString(2,dateList.get(dateBox.getSelectedIndex()) );
                     pst.setString(3, timeList.get(timeBox.getSelectedIndex()));
@@ -130,15 +130,17 @@ public class MovieDetails {
 
                     while(rs.next()){
                         hallList.add(rs.getString(1));
-                        /////////////list to box w description
-                        System.out.println("LAST CINEMA HALL ADDED: "+hallList.get(hallList.size()-1));
-//                        String getCinemaDescCommand = "Select cinema_description from cinema_room where cinema_hall='"+hallList.get(hallList.size()-1)+"'";
-                        PreparedStatement pstCinemaHall = conn.prepareStatement("Select cinema_description from cinema_room where cinema_hallid=?");
-                        pstCinemaHall.setString(1, hallList.get(hallList.size()-1));
-                        ResultSet rsCinemaHall = pstCinemaHall.executeQuery();
-                        while(rsCinemaHall.next()){
-                            hallBox.addItem(rsCinemaHall.getString(1));
-                        }
+                        hallBox.addItem(rs.getString(2));
+                        System.out.println("SUBQUERY SUCCESS! CINEMA DESC: "+rs.getString(2));
+//                        /////////////list to box w description
+//                        System.out.println("LAST CINEMA HALL ADDED: "+hallList.get(hallList.size()-1));
+////                        String getCinemaDescCommand = "Select cinema_description from cinema_room where cinema_hall='"+hallList.get(hallList.size()-1)+"'";
+//                        PreparedStatement pstCinemaHall = conn.prepareStatement("Select cinema_description from cinema_room where cinema_hallid=?");
+//                        pstCinemaHall.setString(1, hallList.get(hallList.size()-1));
+//                        ResultSet rsCinemaHall = pstCinemaHall.executeQuery();
+//                        while(rsCinemaHall.next()){
+//                            hallBox.addItem(rsCinemaHall.getString(1));
+//                        }
                     }
                     System.out.println(hallList);
                 }catch (Exception x){
