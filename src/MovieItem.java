@@ -14,12 +14,12 @@ public class MovieItem{
     private JLabel moviePhoto;
 
     public Header h;
-    public MovieItem(String a, String b, String m, Header x, String photo){
+    public MovieItem(String a, String b, String m, Header x){
         h = x;
         movieTitle.setText(a);
         movieDesc.setText(b);
         movieCodeLabel.setText(m);
-        moviePhoto.setText("<html><img src=\"file:"+photo+"\" width=220 height=317></html>");
+        moviePhoto.setText("<html><img src=\"file:C:\\MovieReserv\\"+m+"\" width=220 height=317></html>");
 
         openMovie.addActionListener(new ActionListener() {
             @Override

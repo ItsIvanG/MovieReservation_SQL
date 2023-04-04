@@ -1,5 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.sql.*;
 public class MovieMenu {
     JPanel panel = new JPanel();
@@ -29,9 +32,30 @@ public class MovieMenu {
             ResultSet rs = pst.executeQuery();
 
 
-            while(rs.next()){
 
-                panel.add(new MovieItem(rs.getString(2),"<html>"+rs.getString(3)+"</html>",rs.getString(1), h,rs.getString("movie_poster")).movieItemPanel);
+            while(rs.next()){
+                new File("C:\\MovieReserv\\").mkdirs();
+                File moviePosterDisk = new File("C:\\MovieReserv\\"+rs.getString(1));
+                FileOutputStream fos = new FileOutputStream(moviePosterDisk);
+
+                if(rs.getObject("movie_poster")!=null){
+                    InputStream moviePosterIS = rs.getBinaryStream("movie_poster");
+                    System.out.println("MOVIEPOSTERIS: "+moviePosterIS.available());
+                    int mpx;
+
+                    while((mpx = moviePosterIS.read()) != -1)
+                    {
+                        fos.write(mpx);
+                    }
+                }
+
+
+                fos.flush();
+                fos.close();
+
+
+
+                panel.add(new MovieItem(rs.getString(2),"<html>"+rs.getString(3)+"</html>",rs.getString(1), h).movieItemPanel);
                 System.out.println("\n"+rs.getString(1)+"\t"+rs.getString(2)+"\t"+rs.getString(3)+"\t"+rs.getString(4));
 
             }

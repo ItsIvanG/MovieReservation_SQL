@@ -59,7 +59,7 @@ public class MovieDetails {
             sql.setString(1,movieCode);
             ResultSet rs = sql.executeQuery();
             while(rs.next()){
-                moviePhoto.setText("<html><img src=\"file:"+rs.getString("movie_poster")+"\" width=220 height=317></html>");
+                moviePhoto.setText("<html><img src=\"file:C:\\MovieReserv\\"+a+"\" width=220 height=317></html>");
                 movieTitle.setText(rs.getString(2));
                 movieDesc.setText("<html>"+rs.getString(3)+"</html>");
                 moviePrice=rs.getDouble("movie_price");

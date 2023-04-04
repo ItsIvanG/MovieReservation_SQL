@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
+import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -25,6 +25,7 @@ public class MovieManage {
     private List<String> movieList = new ArrayList<>();
     private File moviePoster;
     private String moviePosterURL;
+    private byte[] moviePosterByte;
     public MovieManage(Header h){
         System.out.println("HEADER: "+h);
 
@@ -42,6 +43,21 @@ public class MovieManage {
             while(rs.next()){
                 moviesCombobox.addItem("["+rs.getString("movie_id")+"] "+rs.getString("movie_name"));
                 movieList.add(rs.getString("movie_Id"));
+                File moviePosterDisk = new File("C:\\MovieReserv\\"+rs.getString(1));
+                FileOutputStream fos = new FileOutputStream(moviePosterDisk);
+
+                //GET MOVIEPOSTER STREAM
+
+                if(rs.getObject("movie_poster")!=null){
+                    InputStream moviePosterIS = rs.getBinaryStream("movie_poster");
+                    System.out.println("MOVIEPOSTERIS: "+moviePosterIS.available());
+                    int mpx;
+
+                    while((mpx = moviePosterIS.read()) != -1)
+                    {
+                        fos.write(mpx);
+                    }
+                }
             }
             moviesCombobox.addItem("+ Add new movie...");
             System.out.println(movieList);
@@ -76,6 +92,7 @@ public class MovieManage {
                 moviePosterLabel.setText("<html><img src=\"file:"+newPoster+"\" width=220 height=317></html>");
                 moviePoster = newPoster;
                 moviePosterURL = moviePoster.getAbsolutePath();
+
                 System.out.println("URL: "+moviePosterURL);
             }
         });
@@ -91,7 +108,17 @@ public class MovieManage {
                         pst.setString(2, movieDescField.getText());
                         pst.setDouble(3, Double.parseDouble(moviePriceField.getText()));
                         pst.setInt(4,Integer.parseInt(movieDurationField.getText()));
-                        pst.setString(5,moviePosterURL);
+
+                        FileInputStream fis = new FileInputStream(moviePoster);
+                        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                        byte[] buf=new byte[1024];
+                        for(int readNum;(readNum=fis.read(buf))!=-1;){
+                            bos.write(buf,0,readNum);
+
+                        }
+                        moviePosterByte=bos.toByteArray();
+
+                        pst.setBytes(5,moviePosterByte); ////MOVIE POSTER
                         pst.setString(6, movieCodeField.getText());
                         pst.execute();
                         JOptionPane.showMessageDialog(null, "Movie code already exists! Updating existing record.");
@@ -152,9 +179,15 @@ public class MovieManage {
                 movieDurationField.setText(rs.getString("duration_minutes"));
                 movieCodeField.setText(rs.getString("movie_id"));
 //                moviePosterLabel.setIcon(new ImageIcon(rs.getString("movie_poster")));
-                moviePoster = new File(rs.getString("movie_poster"));
-                moviePosterURL = moviePoster.getAbsolutePath();
-                moviePosterLabel.setText("<html><img src=\"file:"+rs.getString("movie_poster")+"\" width=220 height=317></html>");
+
+
+                if(rs.getObject("movie_poster")!=null){
+                    moviePosterLabel.setText("<html><img src=\"file:C:\\MovieReserv\\"+movieList.get(moviesCombobox.getSelectedIndex())+"\" width=220 height=317></html>");
+                    System.out.println(" MOVIE POSTER SET ");
+                } else{
+                    moviePosterLabel.setText("");
+                    System.out.println("NO MOVIE POSTER");
+                }
             }
 
         } catch (Exception x){
