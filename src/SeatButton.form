@@ -17,8 +17,11 @@
           </grid>
         </constraints>
         <properties>
-          <background color="-3073"/>
-          <text value=""/>
+          <background color="-11974327"/>
+          <foreground color="-330753"/>
+          <horizontalTextPosition value="0"/>
+          <text value="A1"/>
+          <verticalTextPosition value="3"/>
         </properties>
       </component>
     </children>

@@ -18,6 +18,7 @@ public class editShowDialog extends JDialog {
     private String setTime;
     private int thisShowID;
     public editShowDialog(ShowManage sm, int showID, boolean isNew) {
+        this.pack();
         thisShowID=showID;
         SpinnerModel hourModel = new SpinnerNumberModel(1, 1, 12, 1);
         SpinnerModel minuteModel = new SpinnerNumberModel(0, 0, 60, 1);

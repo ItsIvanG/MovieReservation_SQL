@@ -34,7 +34,7 @@ public class ConfirmPurchase {
     private String[] paymentMethods = {"COUNTER","CREDIT","GCASH"};
     private int paymentMethodInt=0;
     private List<Integer> paymentIDs = new ArrayList<Integer>();
-    public ConfirmPurchase(List<String> i, int ShowID, String m, Header h){
+    public ConfirmPurchase(List<String> i, int ShowID, String m, Header h, List<String> type){
 
         /////get movie details
         try{
@@ -132,15 +132,17 @@ public class ConfirmPurchase {
                     pst.setString(4, h.accountid);
                     pst.execute();
                     System.out.println("PAYMENT RECORD ADDED");
-
+                    int seatindex=0;
                     for (String seats:
                          i) {
-                        pst = conn.prepareStatement("insert into ticket(seat_id,show_id,payment_id,ticket_price) values (?,?,?,?)");
+                        pst = conn.prepareStatement("insert into ticket(seat_id,show_id,payment_id,ticket_price,ticket_type) values (?,?,?,?,?)");
                         pst.setString(1,seats);
                         pst.setString(2, Integer.toString(ShowID));
                         pst.setString(3,Integer.toString(paymentID));
                         pst.setString(4,Double.toString(moviePrice));
+                        pst.setString(5, type.get(seatindex));
                         pst.execute();
+                        seatindex++;
                     }
                     JOptionPane.showMessageDialog(null, "Purchase success.");
                     h.seeTickets(h);

@@ -1,9 +1,12 @@
 import javax.swing.*;
+import javax.xml.transform.Result;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.RoundingMode;
 import java.sql.*;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +28,7 @@ public class MovieDetails {
     private JLabel moviePhoto;
     private JLabel selectedSeatsVisibleLabel;
     private JLabel movieDurationLabel;
+    private JComboBox ticketTypeBox;
 
     public String movieCode;
 
@@ -38,13 +42,18 @@ public class MovieDetails {
     public List<String> hallList=new ArrayList<String>();
     private String[] rowCodes = {"A","B","C","D","E","F","G","H","I","J"};
     public List<String> selectedSeats=new ArrayList<String>();
+    public List<String> takenSeats=new ArrayList<String>();
+    public List<String> selectedSeatsType=new ArrayList<String>();
     private int noOfSeats;
     public GridLayout seatsLayout = new GridLayout(0,10);
     public int ShowID;
     private double rateAdd;
+
     private double moviePrice;
 
     private double ticketsTotalPrice;
+    public int ticketType=0;//0=reg, 1=discount
+    private static final DecimalFormat df = new DecimalFormat("0.00");
     public MovieDetails(String a, Header h){
         head=h;
         movieCode=a;
@@ -119,10 +128,11 @@ public class MovieDetails {
                 hallBox.removeAllItems();
                 hallList.clear();
 
+
                 try{
                     // Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
                     Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
-                    PreparedStatement pst = conn.prepareStatement("Select cinema_hallid,cinema_description from cinema_room where cinema_hallid=(Select cinema_hallid from show_time where movie_id=? and show_date=? and show_time=?)");
+                    PreparedStatement pst = conn.prepareStatement("Select cinema_hallid,cinema_description,cinema_rate from cinema_room where cinema_hallid=(Select cinema_hallid from show_time where movie_id=? and show_date=? and show_time=?)");
                     pst.setString(1,movieCode);
                     pst.setString(2,dateList.get(dateBox.getSelectedIndex()) );
                     pst.setString(3, timeList.get(timeBox.getSelectedIndex()));
@@ -131,6 +141,8 @@ public class MovieDetails {
                     while(rs.next()){
                         hallList.add(rs.getString(1));
                         hallBox.addItem(rs.getString(2));
+
+
                         System.out.println("SUBQUERY SUCCESS! CINEMA DESC: "+rs.getString(2));
 //                        /////////////list to box w description
 //                        System.out.println("LAST CINEMA HALL ADDED: "+hallList.get(hallList.size()-1));
@@ -158,20 +170,20 @@ public class MovieDetails {
                     // Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
                     Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
 //                    Statement st = conn.createStatement();
-                    ///GET CINEMA RATE
-//                    PreparedStatement sql = conn.prepareStatement("Select rateAdd from cinema_room where cinema_hall=?");
-//                    sql.setString(1,hallList.get(hallBox.getSelectedIndex()));
-//                    ResultSet rs = sql.executeQuery();
-//                    while(rs.next()){
-//                        rateAdd = rs.getDouble(1);
-//                    }
+                    //GET CINEMA RATE
+                    PreparedStatement sql = conn.prepareStatement("Select cinema_rate from cinema_room where cinema_hallid=?");
+                    sql.setString(1,hallList.get(hallBox.getSelectedIndex()));
+                    ResultSet rs = sql.executeQuery();
+                    while(rs.next()){
+                        rateAdd = rs.getDouble(1);
+                    }
 
                     ticketPriceLabel.setText("Ticket price: ₱"+moviePrice);
 
 
-                    PreparedStatement sql = conn.prepareStatement("Select * from cinema_room where cinema_hallid=?");
+                     sql = conn.prepareStatement("Select * from cinema_room where cinema_hallid=?");
                     sql.setString(1,hallList.get(hallBox.getSelectedIndex()));
-                    ResultSet rs = sql.executeQuery();
+                     rs = sql.executeQuery();
                     while(rs.next()){
 
                         noOfSeats=rs.getInt("no_of_seats");
@@ -197,6 +209,8 @@ public class MovieDetails {
                     }
                     System.out.println("SHOW ID: "+ShowID);
                     showIDLabel.setText("ShowID: "+Integer.toString(ShowID));
+                    ticketTypeBox.enable();
+
 
 
                 }catch (Exception x){
@@ -208,9 +222,29 @@ public class MovieDetails {
                 int currentSeat=0;
                 int currentRow=0;
                 int currentSeatReset=0;
+                takenSeats.clear();
+                try{ //GET TAKEN SEATS
+                    Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
+
+                    PreparedStatement pst = conn.prepareStatement("Select seat_id from TICKET where show_id=?");
+                    pst.setString(1,Integer.toString(ShowID));
+
+                    ResultSet rs = pst.executeQuery();
+                    while(rs.next()){
+                       takenSeats.add(rs.getString(1));
+                    }
+                }catch (Exception f){
+                    System. out.println(f.getMessage());
+                }
+
                 while(currentSeat<noOfSeats){
                     String seatIDdebug = rowCodes[currentRow]+(currentSeatReset+1);
-                    seatsPanel.add( new SeatButton(seatIDdebug,m, ShowID).panel);
+
+                    if(takenSeats.contains(seatIDdebug)){
+                        seatsPanel.add( new SeatButton(seatIDdebug,m, ShowID,true).panel);
+                    }else {
+                        seatsPanel.add( new SeatButton(seatIDdebug,m, ShowID,false).panel);
+                    }
                     System.out.println(seatIDdebug+" added");
                     currentSeat++;
                     currentSeatReset++;
@@ -239,6 +273,7 @@ public class MovieDetails {
                 if (!h.customerEmail.isEmpty()) {
                     if(!selectedSeats.isEmpty()){
                     h.purchasingSeats = selectedSeats;
+                    h.purchasingSeatsType=selectedSeatsType;
                     h.selectedShowID = ShowID;
                     h.confirmPurchaseScreen(h);
                     } else {
@@ -249,13 +284,29 @@ public class MovieDetails {
                 }
             }
         });
+        ticketTypeBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ticketType=ticketTypeBox.getSelectedIndex();
+            }
+        });
     }
     public void addSeatToCart(String seatID){
         System.out.println("ADDED TO CART, SEATiD: "+seatID);
         selectedSeats.add(seatID);
+        if(ticketType==0){
+            selectedSeatsType.add("REG");
+        } else if (ticketType==1) {
+            selectedSeatsType.add("DISC");
+        }
         selectedSeatsLabel.setText("");
         for (String x:
                 selectedSeats) {
+            selectedSeatsLabel.setText(selectedSeatsLabel.getText()+x+", ");
+        }
+        selectedSeatsLabel.setText(selectedSeatsLabel.getText()+"<br>");
+
+        for(String x:selectedSeatsType){
             selectedSeatsLabel.setText(selectedSeatsLabel.getText()+x+", ");
         }
         selectedSeatsVisibleLabel.setText("<html>Selected seats: "+selectedSeatsLabel.getText()+"</html>");
@@ -264,21 +315,46 @@ public class MovieDetails {
     }
     public void removeSeatFromCart(String seatID){
         System.out.println("REMOVED FROM CART, SEATiD: "+seatID);
+        int removedSeatIndex;
+        removedSeatIndex=selectedSeats.indexOf(seatID);
+
         selectedSeats.remove(seatID);
+
+        selectedSeatsType.remove(removedSeatIndex);
+
         selectedSeatsLabel.setText("");
         for (String x:
                 selectedSeats) {
             selectedSeatsLabel.setText(selectedSeatsLabel.getText()+x+", ");
         }
+        selectedSeatsLabel.setText(selectedSeatsLabel.getText()+"<br>");
+
+        for(String x:selectedSeatsType){
+            selectedSeatsLabel.setText(selectedSeatsLabel.getText()+x+", ");
+        }
+
         selectedSeatsVisibleLabel.setText("<html>Selected seats: "+selectedSeatsLabel.getText()+"</html>");
         caluclatePrice();
 
     }
 
     public void caluclatePrice(){
+        double pricesWithDiscount=0;
+        for (String x:
+             selectedSeatsType) {
+            if(x.equals("REG")){
+                pricesWithDiscount++;
+
+            } else if (x.equals("DISC")) {
+                pricesWithDiscount=pricesWithDiscount+0.8;
+            }
+        }
         ////calculate price
-        ticketsTotalPrice = selectedSeats.size()*(moviePrice);
+        df.setRoundingMode(RoundingMode.DOWN);
+        ticketsTotalPrice = Double.parseDouble(df.format(selectedSeats.size()*(moviePrice*(pricesWithDiscount/selectedSeats.size())*rateAdd)));
         priceLabel.setText("Total price: ₱"+ticketsTotalPrice);
+        System.out.println("TOTAL PRICE: "+ticketsTotalPrice+"\nMOVIE PRICE:"+moviePrice+"\nPRICE W DISCOUNT:"+pricesWithDiscount+"\nCINEMA RATE:"+rateAdd);
+
 
     }
 

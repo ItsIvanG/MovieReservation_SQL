@@ -168,7 +168,7 @@ public class MovieManage {
                     JOptionPane.showMessageDialog(null, "Movie deleted.");
                 }catch (Exception x){
                     System.out.println(x.getMessage());
-                    if(x.getMessage().equals("UCAExc:::5.0.1 integrity constraint violation: foreign key no action; SHOW_TIME_MOVIESHOW_TIME table: SHOW_TIME")){
+                    if(x.getMessage().startsWith("The DELETE statement conflicted with the REFERENCE constraint")){
                         JOptionPane.showMessageDialog(null, "Movie already has show times associated and cannot be deleted.","Error",JOptionPane.ERROR_MESSAGE);
                     }
                 }

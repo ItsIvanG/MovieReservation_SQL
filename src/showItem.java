@@ -44,7 +44,7 @@ public class showItem {
                     sm.seeShows();
                 }catch (Exception x){
                     System.out.println(x.getMessage());
-                    if(x.getMessage().startsWith("UCAExc:::5.0.1 integrity constraint violation: foreign key no action;")){
+                    if(x.getMessage().startsWith("The DELETE statement conflicted with the REFERENCE constraint")){
                         JOptionPane.showMessageDialog(null, "Show time already has tickets registered and cannot be deleted.","Error",JOptionPane.ERROR_MESSAGE);
                     }
                 }

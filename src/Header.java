@@ -24,6 +24,7 @@ public class Header {
     public String customerContactNo;
 
     public List<String> purchasingSeats=new ArrayList<String>();
+    public List<String> purchasingSeatsType=new ArrayList<String>();
     public int selectedShowID;
     public boolean isAdmin=false;
     public JFrame frame;
@@ -51,7 +52,18 @@ public class Header {
 //        }
 
         setUIFont((new javax.swing.plaf.FontUIResource("Inter", Font.PLAIN, 14))); // SET UI FONT
-        UIManager.put("Button.background", Color.white); //SET BUTTON BG TO WHITE
+        UIManager.put("Button.background", Color.white); //SET BUTTON BG TO WHITE - LIGHTMODE
+//        UIManager.put("Button.background", Color.decode("#383838")); //SET BUTTON BG TO BLACK - DARKMODE
+//        UIManager.put("Button.foreground", Color.white); //SET BUTTON FG TO WHITE - DARKMODE
+//        //DARKMODE \/  \/  \/
+//        UIManager.put("Panel.background", Color.decode("#262626"));
+//        UIManager.put("Panel.foreground", Color.white);
+//        UIManager.put("ComboBox.background", Color.decode("#262626"));
+//        UIManager.put("ComboBox.foreground", Color.white);
+//        UIManager.put("Label.foreground",Color.white);
+//        UIManager.put("RadioButton.background", Color.decode("#262626"));
+//        UIManager.put("RadioButton.foreground", Color.white);
+//        UIManager.put("OptionPane.foreground", Color.white);
 
 
 //        UIManager.put("Panel.background", Color.white);
@@ -191,7 +203,7 @@ public class Header {
 
     public void confirmPurchaseScreen(Header h){
         h.contentPanel.remove(0);
-        h.contentPanel.add(new ConfirmPurchase(purchasingSeats, selectedShowID,movieCode, h).panel);
+        h.contentPanel.add(new ConfirmPurchase(purchasingSeats, selectedShowID,movieCode, h,purchasingSeatsType).panel);
         h.contentPanel.revalidate();
         h.contentPanel.repaint();
     }
