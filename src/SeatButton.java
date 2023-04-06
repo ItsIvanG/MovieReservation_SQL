@@ -34,14 +34,14 @@ public class SeatButton {
         }
 
         if (seatStatus==2){
-            seatButton.setBackground(Color.RED);
+            seatButton.setBackground(Color.decode("#CC0E26"));
         }
         seatButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(seatStatus==0){
                     m.addSeatToCart(SEATID);
-                    seatButton.setBackground(Color.GREEN);
+                    seatButton.setBackground(Color.decode("#13BC57"));
                     seatStatus=1;
                 } else if (seatStatus==1) {
                     m.removeSeatFromCart(SEATID);

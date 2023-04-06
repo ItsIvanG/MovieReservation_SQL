@@ -134,7 +134,16 @@ public class MovieManage {
                         pst.setString(2, movieDescField.getText());
                         pst.setDouble(3, Double.parseDouble(moviePriceField.getText()));
                         pst.setInt(4,Integer.parseInt(movieDurationField.getText()));
-                        pst.setString(5,moviePosterURL);
+                        FileInputStream fis = new FileInputStream(moviePoster);
+                        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                        byte[] buf=new byte[1024];
+                        for(int readNum;(readNum=fis.read(buf))!=-1;){
+                            bos.write(buf,0,readNum);
+
+                        }
+                        moviePosterByte=bos.toByteArray();
+
+                        pst.setBytes(5,moviePosterByte); ////MOVIE POSTER
                         pst.setString(6, movieCodeField.getText());
                         pst.execute();
                         JOptionPane.showMessageDialog(null, "Movie code does not exist! Inserting new record.");
@@ -183,6 +192,7 @@ public class MovieManage {
 
                 if(rs.getObject("movie_poster")!=null){
                     moviePosterLabel.setText("<html><img src=\"file:C:\\MovieReserv\\"+movieList.get(moviesCombobox.getSelectedIndex())+"\" width=220 height=317></html>");
+                    moviePoster = new File("C:\\MovieReserv\\"+movieList.get(moviesCombobox.getSelectedIndex()));
                     System.out.println(" MOVIE POSTER SET ");
                 } else{
                     moviePosterLabel.setText("");

@@ -12,6 +12,8 @@ public class MovieItem{
     public JPanel movieItemPanel;
     private JLabel movieCodeLabel;
     private JLabel moviePhoto;
+    private boolean titleCut=false;
+    private int titleCutLength=25;
 
     public Header h;
     public MovieItem(String a, String b, String m, Header x){
@@ -20,6 +22,11 @@ public class MovieItem{
         movieDesc.setText(b);
         movieCodeLabel.setText(m);
         moviePhoto.setText("<html><img src=\"file:C:\\MovieReserv\\"+m+"\" width=220 height=317></html>");
+
+        if(movieTitle.getText().length()>titleCutLength&& !titleCut){
+            movieTitle.setText(movieTitle.getText().substring(0,titleCutLength)+"...");
+            titleCut=true;
+        }
 
         openMovie.addActionListener(new ActionListener() {
             @Override
