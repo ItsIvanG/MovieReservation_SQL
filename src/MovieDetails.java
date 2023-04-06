@@ -164,6 +164,7 @@ public class MovieDetails {
             @Override
             public void actionPerformed(ActionEvent e) { //////// GENERATE SEATS
                 selectedSeats.clear();
+                selectedSeatsType.clear();
                 caluclatePrice();
                 try
                 {
