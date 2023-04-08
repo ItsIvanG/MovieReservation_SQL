@@ -12,16 +12,18 @@ public class MovieItem{
     public JPanel movieItemPanel;
     private JLabel movieCodeLabel;
     private JLabel moviePhoto;
+    private JLabel movieDurationLabel;
     private boolean titleCut=false;
     private int titleCutLength=25;
 
     public Header h;
-    public MovieItem(String a, String b, String m, Header x){
+    public MovieItem(String a, String b, String m, Header x,int duration){
         h = x;
         movieTitle.setText(a);
         movieDesc.setText(b);
         movieCodeLabel.setText(m);
         moviePhoto.setText("<html><img src=\"file:C:\\MovieReserv\\"+m+"\" width=220 height=317></html>");
+        movieDurationLabel.setText(dateTimeConvert.minutesToHours(duration));
 
         if(movieTitle.getText().length()>titleCutLength&& !titleCut){
             movieTitle.setText(movieTitle.getText().substring(0,titleCutLength)+"...");

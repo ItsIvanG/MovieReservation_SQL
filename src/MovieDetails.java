@@ -54,6 +54,7 @@ public class MovieDetails {
     private double ticketsTotalPrice;
     public int ticketType=0;//0=reg, 1=discount
     private static final DecimalFormat df = new DecimalFormat("0.00");
+    private int seatForEachIndex=0;
     public MovieDetails(String a, Header h){
         head=h;
         movieCode=a;
@@ -293,7 +294,7 @@ public class MovieDetails {
         });
     }
     public void addSeatToCart(String seatID){
-        System.out.println("ADDED TO CART, SEATiD: "+seatID);
+
         selectedSeats.add(seatID);
         if(ticketType==0){
             selectedSeatsType.add("REG");
@@ -301,17 +302,16 @@ public class MovieDetails {
             selectedSeatsType.add("DISC");
         }
         selectedSeatsLabel.setText("");
+        seatForEachIndex=0;
+
         for (String x:
                 selectedSeats) {
-            selectedSeatsLabel.setText(selectedSeatsLabel.getText()+x+", ");
-        }
-        selectedSeatsLabel.setText(selectedSeatsLabel.getText()+"<br>");
-
-        for(String x:selectedSeatsType){
-            selectedSeatsLabel.setText(selectedSeatsLabel.getText()+x+", ");
+            selectedSeatsLabel.setText(selectedSeatsLabel.getText()+x+" - "+selectedSeatsType.get(seatForEachIndex)+", ");
+            seatForEachIndex++;
         }
         selectedSeatsVisibleLabel.setText("<html>Selected seats: "+selectedSeatsLabel.getText()+"</html>");
         caluclatePrice();
+        System.out.println("ADDED TO CART, SEATiD: "+seatID);
 
     }
     public void removeSeatFromCart(String seatID){
@@ -324,14 +324,12 @@ public class MovieDetails {
         selectedSeatsType.remove(removedSeatIndex);
 
         selectedSeatsLabel.setText("");
+        seatForEachIndex=0;
+
         for (String x:
                 selectedSeats) {
-            selectedSeatsLabel.setText(selectedSeatsLabel.getText()+x+", ");
-        }
-        selectedSeatsLabel.setText(selectedSeatsLabel.getText()+"<br>");
-
-        for(String x:selectedSeatsType){
-            selectedSeatsLabel.setText(selectedSeatsLabel.getText()+x+", ");
+            selectedSeatsLabel.setText(selectedSeatsLabel.getText()+x+" - "+selectedSeatsType.get(seatForEachIndex)+", ");
+            seatForEachIndex++;
         }
 
         selectedSeatsVisibleLabel.setText("<html>Selected seats: "+selectedSeatsLabel.getText()+"</html>");

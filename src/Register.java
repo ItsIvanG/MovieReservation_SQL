@@ -83,7 +83,7 @@ public class Register {
                     }
                 catch (Exception x){
                     System. out.println(x.getMessage());
-                    if(x.getMessage().startsWith("UCAExc:::5.0.1 integrity constraint violation: unique constraint or index violation"))
+                    if(x.getMessage().startsWith("Violation of UNIQUE KEY constraint"))
                         JOptionPane.showMessageDialog(null, "Error registering. E-mail already exists!","Error",JOptionPane.ERROR_MESSAGE);
                 }
             }

@@ -122,7 +122,7 @@
         </constraints>
         <properties>
           <text value="showID"/>
-          <visible value="true"/>
+          <visible value="false"/>
         </properties>
       </component>
       <component id="b396d" class="javax.swing.JLabel" binding="moviePhoto">

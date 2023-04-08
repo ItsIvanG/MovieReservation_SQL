@@ -4,7 +4,7 @@ use MovieReserv
 
 create table ACCOUNT(
 Account_ID int constraint accountid_pk primary key identity (1,1),
-Account_Email varchar(40) not null,
+Account_Email varchar(40) not null unique,
 Account_Fname varchar(20) not null,
 Account_Mname varchar(20),
 Account_Lname varchar(20) not null,
@@ -12,6 +12,7 @@ Account_MobileNo char(11),
 Account_Password varchar(20) not null,
 Account_Admin bit
 )
+
 
 create table PAYMENT(
 Payment_ID int constraint paymentid_pk primary key,
