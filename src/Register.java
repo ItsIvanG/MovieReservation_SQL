@@ -4,6 +4,7 @@ import javax.swing.event.CaretListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
+import java.text.DecimalFormat;
 import java.util.Arrays;
 
 public class Register {

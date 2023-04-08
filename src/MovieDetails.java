@@ -349,7 +349,7 @@ public class MovieDetails {
             }
         }
         ////calculate price
-        df.setRoundingMode(RoundingMode.DOWN);
+        df.setRoundingMode(RoundingMode.UP);
         ticketsTotalPrice = Double.parseDouble(df.format(selectedSeats.size()*(moviePrice*(pricesWithDiscount/selectedSeats.size())*rateAdd)));
         priceLabel.setText("Total price: ₱"+ticketsTotalPrice);
         System.out.println("TOTAL PRICE: "+ticketsTotalPrice+"\nMOVIE PRICE:"+moviePrice+"\nPRICE W DISCOUNT:"+pricesWithDiscount+"\nCINEMA RATE:"+rateAdd);

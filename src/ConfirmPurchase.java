@@ -1,10 +1,12 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -33,8 +35,12 @@ public class ConfirmPurchase {
     private int paymentID;
     private String[] paymentMethods = {"COUNTER","CREDIT","GCASH"};
     private int paymentMethodInt=0;
+    private double ticketDiscount;
+
+    private double ticketDiscountSum;
     private List<Integer> paymentIDs = new ArrayList<Integer>();
-    public ConfirmPurchase(List<String> i, int ShowID, String m, Header h, List<String> type){
+    private static final DecimalFormat df = new DecimalFormat("0.00");
+    public ConfirmPurchase(List<String> seats, int ShowID, String m, Header h, List<String> type){
 
         /////get movie details
         try{
@@ -71,7 +77,7 @@ public class ConfirmPurchase {
                 rsCinema = pstCinema.executeQuery();
                 while (rsCinema.next()) {
                     cinemaHallLabel.setText(rsCinema.getString("cinema_description"));
-//                    cinemaRate=rsCinema.getDouble("rateAdd");
+                    cinemaRate=rsCinema.getDouble("cinema_rate");
                     System.out.println("CINEMA DESC:____"+rsCinema.getString(1)+"\nRATE: "+cinemaRate);
                 }
             }
@@ -79,19 +85,34 @@ public class ConfirmPurchase {
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
+        int seatForEachDisplay=0;
 
         for (String x:
-             i) {
-            seatsOrderingLabel.setText(seatsOrderingLabel.getText()+x+", ");
+             seats) {
+            seatsOrderingLabel.setText(seatsOrderingLabel.getText()+x+" - "+type.get(seatForEachDisplay)+", ");
+            if(type.get(seatForEachDisplay).equals("REG")){
+                ticketDiscountSum++;
+            } else if (type.get(seatForEachDisplay).equals("DISC")) {
+                ticketDiscountSum+=0.8;
+            }
+            seatForEachDisplay++;
         }
 
         showIDLabel.setText(String.valueOf(ShowID));
 
 
         ////calculate price
-        ticketsTotalPrice = i.size()*(moviePrice);
+        df.setRoundingMode(RoundingMode.UP);
+
+        ticketsTotalPrice = Double.parseDouble(df.format(seats.size()*(moviePrice*cinemaRate*(ticketDiscountSum/seats.size()))));
+
+        System.out.println("SEAT SIZE: "+seats.size());
+        System.out.println("MOVIE PRICE: "+moviePrice);
+        System.out.println("CINEMA RATE: "+cinemaRate);
+        System.out.println("TICKET DISCOUNT SUM: "+ticketDiscountSum);
+
         priceLabel.setText(priceLabel.getText()+ticketsTotalPrice);
-        ticketsLabel.setText(ticketsLabel.getText()+i.size()+"x");
+        ticketsLabel.setText(ticketsLabel.getText()+seats.size()+"x");
 
         backButton.addActionListener(new ActionListener() {
             @Override
@@ -134,12 +155,19 @@ public class ConfirmPurchase {
                     System.out.println("PAYMENT RECORD ADDED");
                     int seatindex=0;
                     for (String seats:
-                         i) {
+                         seats) {
+
+                        if(type.get(seatindex).equals("REG")){
+                            ticketDiscount=1;
+                        } else if (type.get(seatindex).equals("DISC")) {
+                            ticketDiscount=0.8;
+                        }
+
                         pst = conn.prepareStatement("insert into ticket(seat_id,show_id,payment_id,ticket_price,ticket_type) values (?,?,?,?,?)");
                         pst.setString(1,seats);
                         pst.setString(2, Integer.toString(ShowID));
                         pst.setString(3,Integer.toString(paymentID));
-                        pst.setString(4,Double.toString(moviePrice));
+                        pst.setString(4,Double.toString(moviePrice*cinemaRate*ticketDiscount));
                         pst.setString(5, type.get(seatindex));
                         pst.execute();
                         seatindex++;
