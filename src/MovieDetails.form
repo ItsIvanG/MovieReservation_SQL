@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="MovieDetails">
-  <grid id="27dc6" binding="panel" layout-manager="GridLayoutManager" row-count="17" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="panel" layout-manager="GridLayoutManager" row-count="17" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="50" left="50" bottom="50" right="50"/>
     <constraints>
-      <xy x="20" y="20" width="1288" height="678"/>
+      <xy x="20" y="20" width="1468" height="678"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -84,8 +84,9 @@
       <grid id="71595" binding="seatsPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="50" left="50" bottom="50" right="50"/>
         <constraints>
-          <grid row="3" column="3" row-span="13" col-span="1" vsize-policy="3" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+          <grid row="3" column="2" row-span="13" col-span="1" vsize-policy="3" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <minimum-size width="700" height="-1"/>
+            <maximum-size width="900" height="-1"/>
           </grid>
         </constraints>
         <properties>
@@ -97,7 +98,9 @@
       <grid id="13c0e" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <maximum-size width="900" height="-1"/>
+          </grid>
         </constraints>
         <properties>
           <background color="-11119018"/>
@@ -135,7 +138,7 @@
       </component>
       <component id="5fb6c" class="javax.swing.JLabel" binding="movieTitle">
         <constraints>
-          <grid row="1" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="1" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="1" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <font size="48" style="1"/>
@@ -144,7 +147,7 @@
       </component>
       <component id="2f550" class="javax.swing.JButton" binding="backButton">
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="1" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="1" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="&lt; Back"/>
@@ -194,11 +197,6 @@
           <verticalAlignment value="0"/>
         </properties>
       </component>
-      <hspacer id="53baa">
-        <constraints>
-          <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-      </hspacer>
       <component id="be34b" class="javax.swing.JLabel" binding="selectedSeatsVisibleLabel">
         <constraints>
           <grid row="15" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
@@ -218,15 +216,12 @@
           <text value="movieDuration"/>
         </properties>
       </component>
-      <hspacer id="ae711">
-        <constraints>
-          <grid row="2" column="4" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-      </hspacer>
       <grid id="52958" layout-manager="GridLayoutManager" row-count="1" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="16" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="16" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <maximum-size width="900" height="-1"/>
+          </grid>
         </constraints>
         <properties/>
         <border type="none" title="Legend"/>
@@ -295,6 +290,14 @@
             <item value="REGULAR"/>
             <item value="SC/PWD"/>
           </model>
+        </properties>
+      </component>
+      <component id="a8082" class="javax.swing.JButton" binding="REFRESHButton" default-binding="true">
+        <constraints>
+          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="REFRESH"/>
         </properties>
       </component>
     </children>

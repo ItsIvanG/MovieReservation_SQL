@@ -1,5 +1,4 @@
 import javax.swing.*;
-import javax.xml.transform.Result;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,6 +28,7 @@ public class MovieDetails {
     private JLabel selectedSeatsVisibleLabel;
     private JLabel movieDurationLabel;
     private JComboBox ticketTypeBox;
+    private JButton REFRESHButton;
 
     public String movieCode;
 
