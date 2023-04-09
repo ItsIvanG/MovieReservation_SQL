@@ -251,7 +251,7 @@ public class MovieDetails {
                     currentSeat++;
                     currentSeatReset++;
 
-                    if(currentSeat%seatsPerRow==0&&currentSeat!=0){
+                    if(currentSeat%seatsPerRow==0){
                         currentRow++;
                         currentSeatReset=0;
                     }

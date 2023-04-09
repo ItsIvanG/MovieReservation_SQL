@@ -58,7 +58,6 @@ Ticket_price money,
 constraint ticketid_pk primary key (seat_id,show_id)
 )
 
-
 alter table show_time
 add constraint movieid_fk foreign key (Movie_ID) references MOVIE(Movie_ID)
 
