@@ -180,7 +180,7 @@ public class MovieDetails {
                         rateAdd = rs.getDouble(1);
                     }
 
-                    ticketPriceLabel.setText("Ticket price: ₱"+moviePrice);
+                    ticketPriceLabel.setText("Ticket price: ₱"+(moviePrice*rateAdd));
 
 
                      sql = conn.prepareStatement("Select * from cinema_room where cinema_hallid=?");
