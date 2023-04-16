@@ -85,7 +85,7 @@ drop database MovieReserv
 
 
 
---GET TICKETS
+--GET MY TICKETS
 
 use MovieReserv
 
@@ -93,8 +93,20 @@ select * from show_time
 
 select * from payment
 
-select * from TICKET 
+
+
+select * from TICKET
 join payment on ticket.Payment_ID=payment.payment_id 
 join show_time on ticket.Show_ID=show_time.show_id
 join movie on show_time.movie_id=movie.movie_id
 join cinema_room on show_time.Cinema_hallID=cinema_room.Cinema_hallID
+where payment.account_id=16
+
+--GET MY PAYMENTS
+
+select * from payment
+join ticket on ticket.Payment_ID=payment.payment_id
+join show_time on show_time.show_id=ticket.show_id
+join cinema_room on cinema_room.cinema_hallID=show_time.cinema_hallID
+join movie on movie.movie_id=show_time.movie_id
+where payment.account_id=1

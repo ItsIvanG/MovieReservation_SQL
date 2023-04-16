@@ -26,6 +26,8 @@ public class myPurchases {
     private DefaultListModel<String> purchaseListModel = new DefaultListModel<>();
     private List<Integer> purchaseIDs = new ArrayList<>();
     private List<String> seats = new ArrayList<>();
+    private double ticketDiscountSum;
+
 
     public myPurchases(Header h,String accountid){
         purchaseList.setModel(purchaseListModel);
@@ -57,6 +59,8 @@ public class myPurchases {
             public void valueChanged(ListSelectionEvent e) {
                 System.out.println("select changed "+purchaseList.getSelectedIndex());
                 seats.clear();
+                ticketDiscountSum=0;
+
                 try {
                     // Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
                     Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
@@ -73,14 +77,19 @@ public class myPurchases {
                         purchaseIDLabel.setText("Purchase ID: "+purchaseIDs.get(purchaseList.getSelectedIndex()));
                         purchaseDateLabel.setText("Purchase Date: "+dateTimeConvert.toShortDate(rs.getDate("payment_datetime")));
                         purchaseMethodLabel.setText("Purchase Method: "+rs.getString("mode_of_payment"));
-                        totalPriceLabel.setText("Total Price: ₱"+rs.getString("payment_amount"));
+
                         seats.add(rs.getString("seat_id"));
 
                         timeLabel.setText("Show date/time: "+dateTimeConvert.toShortDate(rs.getDate("show_Date"))+" "+dateTimeConvert.toShortTime(rs.getTime("show_time")));
 
                         movieLabel.setText("Movie: "+rs.getString("movie_name"));
                         cinemaHallLabel.setText("Cinema hall: "+rs.getString("cinema_description"));
-
+                        if(rs.getString("ticket_type").equals("REG")){
+                            ticketDiscountSum+=1;
+                        } else if (rs.getString("ticket_type").equals("DISC")) {
+                            ticketDiscountSum+=0.8;
+                        }
+                        totalPriceLabel.setText("Total Price: ₱"+seats.size()*rs.getInt("movie_price")*(ticketDiscountSum/seats.size())*rs.getDouble("cinema_rate"));
                         /*
                         purchaseIDLabel.setText("Purchase ID: "+purchaseIDs.get(purchaseList.getSelectedIndex()));
                         purchaseDateLabel.setText("Purchase Date: "+dateTimeConvert.toShortDate(rs.getDate("payment_datetime")));

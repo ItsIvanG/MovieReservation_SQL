@@ -1,6 +1,5 @@
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
@@ -25,8 +24,11 @@ public class myTickets {
     private JLabel ticketPurchaseMethodLabel;
     private JLabel ticketPriceLabel;
     private JLabel showIDlabel;
+    private JScrollPane ticketsScrollPane;
+    private JPanel ticketListPanel;
     private DefaultListModel<String> ticketListModel = new DefaultListModel<>();
     public List<Integer> ticketIDs=new ArrayList<Integer>();
+    public List<myTickets_Item> ticketItemsArray=new ArrayList<myTickets_Item>();
     public List<String> ticketsMovies=new ArrayList<String>();
     public List<String> ticketsCinemas=new ArrayList<String>();
     public List<String> ticketsDateTime=new ArrayList<String>();
@@ -35,15 +37,21 @@ public class myTickets {
     public List<String> ticketsPrices=new ArrayList<String>();
 
     public List<String> showIDs=new ArrayList<String>();
+    private Header h;
+    private int currentTickIndex;
+    public int ticketIndex;
     public myTickets(Header h, String accountid){
+        this.h=h;
 
+        ticketListPanel.setLayout(new GridLayout(0,1));
         String movieName="";
         String cinemaHall="";
         String showDate="";
         String showTime="";
         String seatID="";
         ticketPanel.setVisible(false);
-        ticketList.setModel(ticketListModel);
+        ticketsScrollPane.getVerticalScrollBar().setUnitIncrement(16);
+
         try { //// GET TICKETS
             // Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
             Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
@@ -57,7 +65,13 @@ public class myTickets {
             System.out.println("rs success");
             while (rs.next()) {
                 ticketsPurchaseIDs.add(rs.getString("Payment_ID"));
-                ticketsPrices.add(rs.getString("ticket_price"));
+
+                if(rs.getString("ticket_type").equals("REG")){
+                    ticketsPrices.add(rs.getString("movie_price"));
+                } else if (rs.getString("ticket_type").equals("DISC")) {
+                    ticketsPrices.add(String.valueOf(rs.getDouble("movie_price")*0.8));
+                }
+
 
                 ticketIDs.add(rs.getInt("ticket_number"));
                 showIDs.add(rs.getString("show_id"));
@@ -72,8 +86,12 @@ public class myTickets {
                 ticketsMovies.add(rs.getString("movie_name"));
                 ticketsCinemas.add(rs.getString("cinema_description"));
                 cinemaHall=rs.getString("cinema_description");
-                ticketListModel.addElement(movieName+" • "+cinemaHall+" • "+ showDate+" : "+showTime+" • Seat "+seatID);
+//                ticketListModel.addElement(movieName+" • "+cinemaHall+" • "+ showDate+" : "+showTime+" • Seat "+seatID);
 
+                ticketItemsArray.add(new myTickets_Item(movieName,cinemaHall+" • "+ showDate+" : "+showTime+" • Seat "+seatID, this,currentTickIndex));
+                ticketListPanel.add(ticketItemsArray.get(ticketItemsArray.size()-1).Panel);
+
+                currentTickIndex++;
                 /*
                 while(rsTicket.next()){
                     ticketsPurchaseIDs.add(rsTicket.getString("Payment_ID"));
@@ -134,7 +152,7 @@ public class myTickets {
                 h.seeMovieMenu(h);
             }
         });
-        ticketList.addListSelectionListener(new ListSelectionListener() {
+       /* ticketList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
 
@@ -171,6 +189,47 @@ public class myTickets {
                 }
 
             }
-        });
+        });*/
+
+    }
+    void seeTicketDetails(int i){
+        ticketIndex=i;
+
+        for (myTickets_Item a:
+                ticketItemsArray) {
+            a.changeColor();
+        }
+
+        ticketPanel.setVisible(true);
+
+        ticketMovieLabel.setText(ticketsMovies.get(i));
+        ticketCinemaLabel.setText(ticketsCinemas.get(i));
+        ticketDateTimeLabel.setText(ticketsDateTime.get(i));
+        ticketSeatLabel.setText(ticketsSeats.get(i));
+
+        ticketFullNameLabel.setText(h.customerName);
+        ticketEmailLabel.setText(h.customerEmail);
+        ticketContactLabel.setText(h.customerContactNo);
+
+
+        ticketIDLabel.setText("Ticket ID: "+ticketIDs.get(i));
+        ticketPurchaseIDlabel.setText("Purchase ID: "+ticketsPurchaseIDs.get(i));
+        ticketPriceLabel.setText("Ticket Price: ₱"+ticketsPrices.get(i));
+        showIDlabel.setText("Show ID: "+showIDs.get(i));
+
+        try{
+            // Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+            Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
+            PreparedStatement pst = conn.prepareStatement("Select * from payment where payment_id=?");
+            pst.setString(1,ticketsPurchaseIDs.get(i));
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                ticketPurchaseDateTimeLabel.setText(rs.getString("Payment_datetime"));
+                ticketPurchaseMethodLabel.setText(rs.getString("mode_of_payment"));
+
+            }
+        }catch (Exception x){
+            System.out.println(x.getMessage());
+        }
     }
 }

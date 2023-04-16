@@ -146,11 +146,10 @@ public class ConfirmPurchase {
                     LocalDateTime now = LocalDateTime.now();
                     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-                    pst = conn.prepareStatement("insert into payment(payment_id,mode_of_payment,payment_amount,account_id) values (?,?,?,?)");
+                    pst = conn.prepareStatement("insert into payment(payment_id,mode_of_payment,account_id) values (?,?,?)");
                     pst.setString(1,Integer.toString(paymentID));
                     pst.setString(2,paymentMethods[paymentMethodInt]);
-                    pst.setString(3,Double.toString(ticketsTotalPrice));
-                    pst.setString(4, h.accountid);
+                    pst.setString(3, h.accountid);
                     pst.execute();
                     System.out.println("PAYMENT RECORD ADDED");
                     int seatindex=0;
@@ -163,12 +162,11 @@ public class ConfirmPurchase {
                             ticketDiscount=0.8;
                         }
 
-                        pst = conn.prepareStatement("insert into ticket(seat_id,show_id,payment_id,ticket_price,ticket_type) values (?,?,?,?,?)");
+                        pst = conn.prepareStatement("insert into ticket(seat_id,show_id,payment_id,ticket_type) values (?,?,?,?)");
                         pst.setString(1,seats);
                         pst.setString(2, Integer.toString(ShowID));
                         pst.setString(3,Integer.toString(paymentID));
-                        pst.setString(4,Double.toString(moviePrice*cinemaRate*ticketDiscount));
-                        pst.setString(5, type.get(seatindex));
+                        pst.setString(4, type.get(seatindex));
                         pst.execute();
                         seatindex++;
                     }
