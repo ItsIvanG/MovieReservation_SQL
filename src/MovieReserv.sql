@@ -75,9 +75,26 @@ add constraint accountid_fk foreign key (account_id) references account(account_
 
 
 insert into account values('ivan.gonzales@gmail.com','Ivan',null,'Gonzales','09991112222','pogi',1)
+insert into account values('2','test2',null,'Gonzales','09991112222','2',1)
 insert into movie values('m1','Test movie','Test description','100','120',null,'G')
 
 
 drop table account,CINEMA_ROOM,movie,payment,show_time
 
 drop database MovieReserv
+
+
+
+--GET TICKETS
+
+use MovieReserv
+
+select * from show_time
+
+select * from payment
+
+select * from TICKET 
+join payment on ticket.Payment_ID=payment.payment_id 
+join show_time on ticket.Show_ID=show_time.show_id
+join movie on show_time.movie_id=movie.movie_id
+join cinema_room on show_time.Cinema_hallID=cinema_room.Cinema_hallID

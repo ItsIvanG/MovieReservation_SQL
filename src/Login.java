@@ -57,6 +57,7 @@ public class Login {
             boolean found=false;
             while(rs.next()){
                 JOptionPane.showMessageDialog(null, "Logged in as: "+rs.getString("account_fname"));
+                System.out.println(rs.getString("account_fname")+" ID: "+rs.getString("account_id"));
                 h.customerEmail=rs.getString("account_email");
                 h.customerName=rs.getString("account_fname")+" "+rs.getString("account_lname");
                 h.customerContactNo=rs.getString("account_mobileno");

@@ -47,18 +47,34 @@ public class myTickets {
         try { //// GET TICKETS
             // Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
             Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
-            PreparedStatement pst = conn.prepareStatement("select * from payment where account_id=?");
+            PreparedStatement pst = conn.prepareStatement("select * from TICKET\n" +
+                    "join show_time on ticket.Show_ID=show_time.show_id\n" +
+                    "join movie on show_time.movie_id=movie.movie_id\n" +
+                    "join cinema_room on show_time.Cinema_hallID=cinema_room.Cinema_hallID\n" +
+                    "join payment on ticket.Payment_ID=payment.payment_id where payment.account_id=?");
             pst.setString(1,accountid);
             ResultSet rs = pst.executeQuery();
             System.out.println("rs success");
             while (rs.next()) {
+                ticketsPurchaseIDs.add(rs.getString("Payment_ID"));
+                ticketsPrices.add(rs.getString("ticket_price"));
 
+                ticketIDs.add(rs.getInt("ticket_number"));
+                showIDs.add(rs.getString("show_id"));
+                ticketsSeats.add(rs.getString("seat_id"));
+                seatID=rs.getString("seat_id");
+                showDate=dateTimeConvert.toShortDate(rs.getDate("show_date"));
+                showTime=dateTimeConvert.toShortTime(rs.getTime("show_time"));
 
-                PreparedStatement pstTicket = conn.prepareStatement("select * from ticket where payment_id=?");
-                pstTicket.setString(1, rs.getString("Payment_ID"));
-                ResultSet rsTicket = pstTicket.executeQuery();
+                ticketsDateTime.add(showDate+" | "+showTime);
 
+                movieName=rs.getString("movie_name");
+                ticketsMovies.add(rs.getString("movie_name"));
+                ticketsCinemas.add(rs.getString("cinema_description"));
+                cinemaHall=rs.getString("cinema_description");
+                ticketListModel.addElement(movieName+" • "+cinemaHall+" • "+ showDate+" : "+showTime+" • Seat "+seatID);
 
+                /*
                 while(rsTicket.next()){
                     ticketsPurchaseIDs.add(rsTicket.getString("Payment_ID"));
                     ticketsPrices.add(rsTicket.getString("ticket_price"));
@@ -103,7 +119,7 @@ public class myTickets {
 
                         ticketListModel.addElement(movieName+" • "+cinemaHall+" • "+ showDate+" : "+showTime+" • Seat "+seatID);
                     }
-                }
+                }*/
 
             }
 

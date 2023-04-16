@@ -133,7 +133,7 @@ public class MovieDetails {
                 try{
                     // Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
                     Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
-                    PreparedStatement pst = conn.prepareStatement("Select cinema_hallid,cinema_description,cinema_rate from cinema_room where cinema_hallid=(Select cinema_hallid from show_time where movie_id=? and show_date=? and show_time=?)");
+                    PreparedStatement pst = conn.prepareStatement("Select cinema_hallid,cinema_description,cinema_rate from cinema_room where cinema_hallid in (Select cinema_hallid from show_time where movie_id=? and show_date=? and show_time=?)");
                     pst.setString(1,movieCode);
                     pst.setString(2,dateList.get(dateBox.getSelectedIndex()) );
                     pst.setString(3, timeList.get(timeBox.getSelectedIndex()));
