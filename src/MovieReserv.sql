@@ -18,7 +18,6 @@ create table PAYMENT(
 Payment_ID int constraint paymentid_pk primary key,
 Payment_DateTime datetime default getdate(),
 Mode_of_Payment varchar(20),
-Payment_Amount money,
 Account_ID int,
 )
 
@@ -54,7 +53,7 @@ Ticket_Number int identity (1,1),
 Seat_ID varchar(4),
 Show_ID int,
 Payment_ID int,
-Ticket_price money,
+ticket_type varchar(4),
 constraint ticketid_pk primary key (seat_id,show_id)
 )
 
