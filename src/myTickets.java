@@ -67,9 +67,9 @@ public class myTickets {
                 ticketsPurchaseIDs.add(rs.getString("Payment_ID"));
 
                 if(rs.getString("ticket_type").equals("REG")){
-                    ticketsPrices.add(rs.getString("movie_price"));
+                    ticketsPrices.add(String.valueOf(rs.getDouble("movie_price")*rs.getDouble("cinema_rate")));
                 } else if (rs.getString("ticket_type").equals("DISC")) {
-                    ticketsPrices.add(String.valueOf(rs.getDouble("movie_price")*0.8));
+                    ticketsPrices.add(String.valueOf(rs.getDouble("movie_price")*rs.getDouble("cinema_rate")*0.8));
                 }
 
 
