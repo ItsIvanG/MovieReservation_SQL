@@ -240,14 +240,14 @@ public class MovieDetails {
                 }
 
                 while(currentSeat<noOfSeats){
-                    String seatIDdebug = rowCodes[currentRow]+(currentSeatReset+1);
+                    String seatID = rowCodes[currentRow]+(currentSeatReset+1);
 
-                    if(takenSeats.contains(seatIDdebug)){
-                        seatsPanel.add( new SeatButton(seatIDdebug,m, ShowID,true).panel);
+                    if(takenSeats.contains(seatID)){
+                        seatsPanel.add( new SeatButton(seatID,m, ShowID,true).panel);
                     }else {
-                        seatsPanel.add( new SeatButton(seatIDdebug,m, ShowID,false).panel);
+                        seatsPanel.add( new SeatButton(seatID,m, ShowID,false).panel);
                     }
-                    System.out.println(seatIDdebug+" added");
+                    System.out.println(seatID+" added");
                     currentSeat++;
                     currentSeatReset++;
 
