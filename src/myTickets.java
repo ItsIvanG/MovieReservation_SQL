@@ -9,7 +9,6 @@ import java.util.List;
 public class myTickets {
     public JPanel panel;
     private JButton backButton;
-    private JList ticketList;
     private JLabel ticketMovieLabel;
     private JLabel ticketCinemaLabel;
     private JLabel ticketDateTimeLabel;
