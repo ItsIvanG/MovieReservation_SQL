@@ -99,7 +99,8 @@ join payment on ticket.Payment_ID=payment.payment_id
 join show_time on ticket.Show_ID=show_time.show_id
 join movie on show_time.movie_id=movie.movie_id
 join cinema_room on show_time.Cinema_hallID=cinema_room.Cinema_hallID
-where payment.account_id=16
+where payment.account_id=1
+
 
 --GET MY PAYMENTS
 
@@ -108,4 +109,11 @@ join ticket on ticket.Payment_ID=payment.payment_id
 join show_time on show_time.show_id=ticket.show_id
 join cinema_room on cinema_room.cinema_hallID=show_time.cinema_hallID
 join movie on movie.movie_id=show_time.movie_id
-where payment.account_id=1
+where payment.payment_id=4
+
+alter table ticket
+drop column ticket_price
+
+
+alter table payment
+drop column payment_amount

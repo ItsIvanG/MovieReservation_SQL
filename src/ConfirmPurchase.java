@@ -174,6 +174,9 @@ public class ConfirmPurchase {
                     h.seeTickets(h);
                 } catch(Exception x){
                     System.out.println(x.getMessage());
+                    if(x.getMessage().startsWith("Violation of PRIMARY KEY constraint 'ticketid_pk'")){
+                        JOptionPane.showMessageDialog(null, "Selected seats are already taken. Go back and select other seats.","Error",JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             }
         });

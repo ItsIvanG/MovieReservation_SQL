@@ -164,8 +164,7 @@ public class MovieDetails {
         hallBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) { //////// GENERATE SEATS
-                selectedSeats.clear();
-                selectedSeatsType.clear();
+
                 caluclatePrice();
                 try
                 {
@@ -192,7 +191,7 @@ public class MovieDetails {
                         seatsPerRow=rs.getInt("seatsperrow");
                     }
                     System.out.println("SELECTED CINEMA: "+hallList.get(hallBox.getSelectedIndex())+" WHERE NO. OF SEATS: "+noOfSeats+" AND SEATSPERROW: "+seatsPerRow);
-                    seatsPanel.removeAll();
+
                     seatsLayout = new GridLayout(0,seatsPerRow);
                     seatsPanel.setLayout(seatsLayout);
                     seatsPanel.setBorder(BorderFactory.createEmptyBorder(50,100,50,100));
@@ -219,53 +218,7 @@ public class MovieDetails {
                     System. out.println(x.getMessage());
                 }
 
-                /////ADD SEATS TO PANEL
-
-                int currentSeat=0;
-                int currentRow=0;
-                int currentSeatReset=0;
-                takenSeats.clear();
-                try{ //GET TAKEN SEATS
-                    Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
-
-                    PreparedStatement pst = conn.prepareStatement("Select seat_id from TICKET where show_id=?");
-                    pst.setString(1,Integer.toString(ShowID));
-
-                    ResultSet rs = pst.executeQuery();
-                    while(rs.next()){
-                       takenSeats.add(rs.getString(1));
-                    }
-                }catch (Exception f){
-                    System. out.println(f.getMessage());
-                }
-
-                while(currentSeat<noOfSeats){
-                    String seatID = rowCodes[currentRow]+(currentSeatReset+1);
-
-                    if(takenSeats.contains(seatID)){
-                        seatsPanel.add( new SeatButton(seatID,m, ShowID,true).panel);
-                    }else {
-                        seatsPanel.add( new SeatButton(seatID,m, ShowID,false).panel);
-                    }
-                    System.out.println(seatID+" added");
-                    currentSeat++;
-                    currentSeatReset++;
-
-                    if(currentSeat%seatsPerRow==0){
-                        currentRow++;
-                        currentSeatReset=0;
-                    }
-                }
-//                for (int i = 0; i < noOfSeats/seatsPerRow; i++) {
-//                    for (int x = 0; x < seatsPerRow; x++) {
-//
-//                        seatsPanel.add(new SeatButton(seatIDdebug,m, ShowID).panel);
-//                        System.out.println(seatIDdebug+" added");
-//                    }
-//                }
-
-                seatsPanel.revalidate();
-                seatsPanel.repaint();
+                refreshSeats();
             }
         });
 
@@ -290,6 +243,12 @@ public class MovieDetails {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ticketType=ticketTypeBox.getSelectedIndex();
+            }
+        });
+        REFRESHButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                refreshSeats();
             }
         });
     }
@@ -355,6 +314,57 @@ public class MovieDetails {
         System.out.println("TOTAL PRICE: "+ticketsTotalPrice+"\nMOVIE PRICE:"+moviePrice+"\nPRICE W DISCOUNT:"+pricesWithDiscount+"\nCINEMA RATE:"+rateAdd);
 
 
+    }
+    void refreshSeats(){
+        /////ADD SEATS TO PANEL
+        selectedSeats.clear();
+        selectedSeatsType.clear();
+        seatsPanel.removeAll();
+        int currentSeat=0;
+        int currentRow=0;
+        int currentSeatReset=0;
+        takenSeats.clear();
+        try{ //GET TAKEN SEATS
+            Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
+
+            PreparedStatement pst = conn.prepareStatement("Select seat_id from TICKET where show_id=?");
+            pst.setString(1,Integer.toString(ShowID));
+
+            ResultSet rs = pst.executeQuery();
+            while(rs.next()){
+                takenSeats.add(rs.getString(1));
+            }
+        }catch (Exception f){
+            System. out.println(f.getMessage());
+        }
+
+        while(currentSeat<noOfSeats){
+            String seatID = rowCodes[currentRow]+(currentSeatReset+1);
+
+            if(takenSeats.contains(seatID)){
+                seatsPanel.add( new SeatButton(seatID,m, ShowID,true).panel);
+            }else {
+                seatsPanel.add( new SeatButton(seatID,m, ShowID,false).panel);
+            }
+            System.out.println(seatID+" added");
+            currentSeat++;
+            currentSeatReset++;
+
+            if(currentSeat%seatsPerRow==0){
+                currentRow++;
+                currentSeatReset=0;
+            }
+        }
+//                for (int i = 0; i < noOfSeats/seatsPerRow; i++) {
+//                    for (int x = 0; x < seatsPerRow; x++) {
+//
+//                        seatsPanel.add(new SeatButton(seatIDdebug,m, ShowID).panel);
+//                        System.out.println(seatIDdebug+" added");
+//                    }
+//                }
+
+        seatsPanel.revalidate();
+        seatsPanel.repaint();
     }
 
 }
