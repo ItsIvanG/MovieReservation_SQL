@@ -54,7 +54,7 @@ public class myTickets {
         try { //// GET TICKETS
             // Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
             Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
-            PreparedStatement pst = conn.prepareStatement("select * from TICKET\n" +
+            PreparedStatement pst = conn.prepareStatement("select ticket.ticket_type, from TICKET\n" +
                     "join show_time on ticket.Show_ID=show_time.show_id\n" +
                     "join movie on show_time.movie_id=movie.movie_id\n" +
                     "join cinema_room on show_time.Cinema_hallID=cinema_room.Cinema_hallID\n" +

@@ -1,6 +1,6 @@
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,12 +13,15 @@ public class MovieItem{
     private JLabel movieCodeLabel;
     private JLabel moviePhoto;
     private JLabel movieDurationLabel;
+    private JPanel ratingPanel;
+    private JLabel ratingLabel;
     private boolean titleCut=false;
     private int titleCutLength=25;
 
     public Header h;
-    public MovieItem(String a, String b, String m, Header x,int duration){
+    public MovieItem(String a, String b, String m, Header x,int duration, String rating){
         h = x;
+        ratingLabel.setText(rating);
         movieTitle.setText(a);
         movieDesc.setText(b);
         movieCodeLabel.setText(m);
@@ -28,6 +31,14 @@ public class MovieItem{
         if(movieTitle.getText().length()>titleCutLength&& !titleCut){
             movieTitle.setText(movieTitle.getText().substring(0,titleCutLength)+"...");
             titleCut=true;
+        }
+
+        //SET RATING PANEL BG
+
+        if (rating.startsWith("R")){
+            ratingPanel.setBackground(Color.decode("#CC0E26"));
+        } else if (rating.startsWith("PG")) {
+            ratingPanel.setBackground(Color.decode("#028DD3"));
         }
 
         openMovie.addActionListener(new ActionListener() {

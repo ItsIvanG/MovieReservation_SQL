@@ -39,4 +39,7 @@ public class SeatButton {
             }
         });
     }
+    SeatButton(boolean blank){
+        panel.removeAll();
+    }
 }

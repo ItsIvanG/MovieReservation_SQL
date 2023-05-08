@@ -74,6 +74,8 @@ public class Header {
         ///------------------------------------/AUTOLOGIN
         loginstart.tryLogin(h, "ivan.gonzales@gmail.com","pogi");
 
+
+
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -159,6 +161,10 @@ public class Header {
         h.contentPanel.revalidate();
         h.contentPanel.repaint();
 
+        ///----------AUTO MOVIE
+
+//        h.movieCode="m1";
+//        h.seeMovieDetails(h);
 
     }
 

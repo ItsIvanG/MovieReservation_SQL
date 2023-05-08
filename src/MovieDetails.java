@@ -192,7 +192,11 @@ public class MovieDetails {
                     }
                     System.out.println("SELECTED CINEMA: "+hallList.get(hallBox.getSelectedIndex())+" WHERE NO. OF SEATS: "+noOfSeats+" AND SEATSPERROW: "+seatsPerRow);
 
-                    seatsLayout = new GridLayout(0,seatsPerRow);
+                    if(seatsPerRow%2==0){
+                        seatsLayout = new GridLayout(0,seatsPerRow+1);
+                    } else {
+                        seatsLayout = new GridLayout(0,seatsPerRow);
+                    }
                     seatsPanel.setLayout(seatsLayout);
                     seatsPanel.setBorder(BorderFactory.createEmptyBorder(50,100,50,100));
 
@@ -340,6 +344,10 @@ public class MovieDetails {
 
         while(currentSeat<noOfSeats){
             String seatID = rowCodes[currentRow]+(currentSeatReset+1);
+
+            if(seatsPerRow%2==0 && currentSeatReset%(seatsPerRow/2)==0 && currentSeatReset!=0){
+                seatsPanel.add( new SeatButton(true).panel);
+            }
 
             if(takenSeats.contains(seatID)){
                 seatsPanel.add( new SeatButton(seatID,m, ShowID,true).panel);
