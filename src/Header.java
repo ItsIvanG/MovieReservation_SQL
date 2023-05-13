@@ -2,7 +2,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Header {
@@ -17,6 +20,7 @@ public class Header {
     private JButton manageMoviesButton;
     private JButton manageShowsButton;
     private JButton manageHallsButton;
+    private JButton viewProfileButton;
 
     public String movieCode;
     public String customerEmail="";
@@ -30,6 +34,7 @@ public class Header {
     public JFrame frame;
     public String accountid;
 
+
     public static void setUIFont(javax.swing.plaf.FontUIResource f) {
         java.util.Enumeration keys = UIManager.getDefaults().keys();
         while (keys.hasMoreElements()) {
@@ -40,6 +45,7 @@ public class Header {
         }
     }
     public Header() {
+
 
 //        try {
 //            // Set System L&F
@@ -104,7 +110,7 @@ public class Header {
                 accountid="";
                 isAdmin=false;
 
-                checkLoginStatus(h);
+                checkLoginStatus();
                 seeMovieMenu(h);
             }
         });
@@ -129,13 +135,19 @@ public class Header {
         manageShowsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                h.seeShowManager();
+                seeShowManager();
             }
         });
         manageHallsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                h.seeHallManager();
+                seeHallManager();
+            }
+        });
+        viewProfileButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                seeAccount();
             }
         });
     }
@@ -147,7 +159,7 @@ public class Header {
         h.frame = new JFrame();
 
 
-        h.checkLoginStatus(h);
+        h.checkLoginStatus();
 
         h.frame.setSize(1000,800);
         h.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -182,19 +194,28 @@ public class Header {
         h.contentPanel.repaint();
     }
 
-    public void checkLoginStatus(Header h){
+    public void seeAccount(){
+        this.contentPanel.remove(0);
+        this.contentPanel.add(new myAccount(this).panel);
+        this.contentPanel.revalidate();
+        this.contentPanel.repaint();
+    }
+
+    public void checkLoginStatus(){
         if(customerEmail.equals("")){
             signOutButton.setVisible(false);
             myTicketsButton.setVisible(false);
             signInButton.setVisible(true);
             registerButton.setVisible(true);
             myPurchasesButton.setVisible(false);
+            viewProfileButton.setVisible(false);
         } else{
             signOutButton.setVisible(true);
             myTicketsButton.setVisible(true);
             signInButton.setVisible(false);
             registerButton.setVisible(false);
             myPurchasesButton.setVisible(true);
+            viewProfileButton.setVisible(true);
         }
         if(isAdmin){
             manageHallsButton.setVisible(true);

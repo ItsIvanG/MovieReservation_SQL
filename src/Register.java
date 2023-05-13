@@ -91,6 +91,7 @@ public class Register {
         });
     }
     public void checkPassword(){
+
         if(Arrays.equals(passwordField.getPassword(), confirmPassField.getPassword()) && !new String(passwordField.getPassword()).equals("")){
             passwordValid=true;
         } else{
@@ -104,16 +105,22 @@ public class Register {
             passwordValidLabel.setForeground(Color.RED);
         }
         checkRequired();
+
+
     }
 
     public void checkRequired(){
-        if(!fnameField.getText().equals("") &&!lnameField.getText().equals("") && !emailField.getText().equals("")&& !contactnoField.getText().equals("")&&passwordValid){
-            signUpButton.setEnabled(true);
-            requiredMsg.setVisible(false);
-        } else{
-            signUpButton.setEnabled(false);
-            requiredMsg.setVisible(true);
-        }
+
+            if(!fnameField.getText().equals("") &&!lnameField.getText().equals("") && !emailField.getText().equals("")&& !contactnoField.getText().equals("")&&passwordValid){
+                signUpButton.setEnabled(true);
+                requiredMsg.setVisible(false);
+                passwordValidLabel.setText("");
+            } else{
+                signUpButton.setEnabled(false);
+                requiredMsg.setVisible(true);
+            }
+
+
     }
 
 }

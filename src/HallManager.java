@@ -23,7 +23,7 @@ public class HallManager {
     private JButton applyButton;
     private JSpinner rateAddSpinner;
     private List<String> hallList = new ArrayList<>();
-    private String[] rowCodes = {"A","B","C","D","E","F","G","H","I","J"};
+    private String[] rowCodes = {"A","B","C","D","E","F","G","H","I","J","K","L","M"};
     public HallManager(Header h){
         SpinnerModel rateSpinnerModel = new SpinnerNumberModel(0, 0, 10, 0.1);
         rateAddSpinner.setModel(rateSpinnerModel);

@@ -29,6 +29,8 @@ public class MovieDetails {
     private JLabel movieDurationLabel;
     private JComboBox ticketTypeBox;
     private JButton REFRESHButton;
+    private JPanel ratingPanel;
+    private JLabel ratingLabel;
 
     public String movieCode;
 
@@ -40,7 +42,7 @@ public class MovieDetails {
     public List<String> dateList=new ArrayList<String>();
     public List<String> timeList=new ArrayList<String>();
     public List<String> hallList=new ArrayList<String>();
-    private String[] rowCodes = {"A","B","C","D","E","F","G","H","I","J"};
+    private String[] rowCodes = {"A","B","C","D","E","F","G","H","I","J","K","L","M"};
     public List<String> selectedSeats=new ArrayList<String>();
     public List<String> takenSeats=new ArrayList<String>();
     public List<String> selectedSeatsType=new ArrayList<String>();
@@ -55,6 +57,7 @@ public class MovieDetails {
     public int ticketType=0;//0=reg, 1=discount
     private static final DecimalFormat df = new DecimalFormat("0.00");
     private int seatForEachIndex=0;
+    private int seatDivisible=0;
     public MovieDetails(String a, Header h){
         head=h;
         movieCode=a;
@@ -75,7 +78,18 @@ public class MovieDetails {
                 moviePrice=rs.getDouble("movie_price");
                 movieDurationLabel.setText(dateTimeConvert.minutesToHours(rs.getInt("duration_minutes")));
                 System.out.println("\n"+rs.getString(1)+"\t"+rs.getString(2)+"\t"+rs.getString(3)+"\t"+rs.getString(4));
+
+                //SET RATING PANEL BG
+
+                ratingLabel.setText(rs.getString("movie_rating"));
+
+                if (rs.getString("movie_rating").startsWith("R")){
+                    ratingPanel.setBackground(Color.decode("#CC0E26"));
+                } else if (rs.getString("movie_rating").startsWith("PG")) {
+                    ratingPanel.setBackground(Color.decode("#028DD3"));
+                }
             }
+
             // GET SHOW DATES
             sql = conn.prepareStatement("Select distinct show_date from show_time where movie_id=?");
             sql.setString(1,movieCode);
@@ -128,6 +142,7 @@ public class MovieDetails {
                 System.out.println("GETTING CINEMAS");
                 hallBox.removeAllItems();
                 hallList.clear();
+
 
 
                 try{
@@ -192,13 +207,7 @@ public class MovieDetails {
                     }
                     System.out.println("SELECTED CINEMA: "+hallList.get(hallBox.getSelectedIndex())+" WHERE NO. OF SEATS: "+noOfSeats+" AND SEATSPERROW: "+seatsPerRow);
 
-                    if(seatsPerRow%2==0){
-                        seatsLayout = new GridLayout(0,seatsPerRow+1);
-                    } else {
-                        seatsLayout = new GridLayout(0,seatsPerRow);
-                    }
-                    seatsPanel.setLayout(seatsLayout);
-                    seatsPanel.setBorder(BorderFactory.createEmptyBorder(50,100,50,100));
+
 
                     ///SET SHOWID
                     sql = conn.prepareStatement("Select show_id from show_time where cinema_hallid=? and movie_id=? and show_date=? and show_time=?");
@@ -214,7 +223,7 @@ public class MovieDetails {
                     }
                     System.out.println("SHOW ID: "+ShowID);
                     showIDLabel.setText("ShowID: "+Integer.toString(ShowID));
-                    ticketTypeBox.enable();
+                    ticketTypeBox.setEnabled(true);
 
 
 
@@ -320,6 +329,26 @@ public class MovieDetails {
 
     }
     void refreshSeats(){
+
+        seatDivisible=0;
+        if (seatsPerRow%3==0&&seatDivisible==0){
+            seatsLayout = new GridLayout(0,seatsPerRow+3);
+            seatDivisible=3;
+
+        }
+        else if(seatsPerRow%2==0&&seatDivisible==0){
+
+            seatsLayout = new GridLayout(0,seatsPerRow+2);
+            seatDivisible=2;
+
+        } else {
+            seatsLayout = new GridLayout(0,seatsPerRow+1);
+
+        }
+
+        seatsPanel.setLayout(seatsLayout);
+        seatsPanel.setBorder(BorderFactory.createEmptyBorder(30,0,0,30));
+
         /////ADD SEATS TO PANEL
         selectedSeats.clear();
         selectedSeatsType.clear();
@@ -343,16 +372,21 @@ public class MovieDetails {
         }
 
         while(currentSeat<noOfSeats){
+            if(currentSeatReset==0){
+                seatsPanel.add(new SeatButton(rowCodes[currentRow]).panel);
+            }
             String seatID = rowCodes[currentRow]+(currentSeatReset+1);
-
-            if(seatsPerRow%2==0 && currentSeatReset%(seatsPerRow/2)==0 && currentSeatReset!=0){
-                seatsPanel.add( new SeatButton(true).panel);
+             if(seatsPerRow%3==0 && currentSeatReset%(seatsPerRow/3)==0 && currentSeatReset!=0 && seatDivisible==3){
+                seatsPanel.add( new SeatButton("blank").panel);
+            }
+            else if(seatsPerRow%2==0 && currentSeatReset%(seatsPerRow/2)==0 && currentSeatReset!=0 && seatDivisible==2){
+                seatsPanel.add( new SeatButton("blank").panel);
             }
 
             if(takenSeats.contains(seatID)){
-                seatsPanel.add( new SeatButton(seatID,m, ShowID,true).panel);
+                seatsPanel.add( new SeatButton(seatID,m,true).panel);
             }else {
-                seatsPanel.add( new SeatButton(seatID,m, ShowID,false).panel);
+                seatsPanel.add( new SeatButton(seatID,m,false).panel);
             }
             System.out.println(seatID+" added");
             currentSeat++;
@@ -362,6 +396,20 @@ public class MovieDetails {
                 currentRow++;
                 currentSeatReset=0;
             }
+        }
+
+        seatsPanel.add( new SeatButton("blank").panel);
+        currentSeatReset++;
+        while(currentSeat<noOfSeats+seatsPerRow){
+            seatsPanel.add( new SeatButton((Integer.toString(currentSeatReset))).panel);
+            if(seatsPerRow%3==0 && currentSeatReset%(seatsPerRow/3)==0 && currentSeatReset!=0 && seatDivisible==3){
+                seatsPanel.add( new SeatButton("blank").panel);
+            }
+            else if(seatsPerRow%2==0 && currentSeatReset%(seatsPerRow/2)==0 && currentSeatReset!=0 && seatDivisible==2){
+                seatsPanel.add( new SeatButton("blank").panel);
+            }
+            currentSeat++;
+            currentSeatReset++;
         }
 //                for (int i = 0; i < noOfSeats/seatsPerRow; i++) {
 //                    for (int x = 0; x < seatsPerRow; x++) {

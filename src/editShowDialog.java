@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
 import java.util.ArrayList;
@@ -18,7 +19,10 @@ public class editShowDialog extends JDialog {
     private String setTime;
     private int thisShowID;
     public editShowDialog(ShowManage sm, int showID, boolean isNew) {
+
+        this.setSize(new Dimension(500,100));
         this.pack();
+
         thisShowID=showID;
         SpinnerModel hourModel = new SpinnerNumberModel(1, 1, 12, 1);
         SpinnerModel minuteModel = new SpinnerNumberModel(0, 0, 60, 1);

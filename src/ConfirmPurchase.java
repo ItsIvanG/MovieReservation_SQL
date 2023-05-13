@@ -25,7 +25,7 @@ public class ConfirmPurchase {
     private JButton confirmButton;
     private JLabel priceLabel;
     private JLabel ticketsLabel;
-    private JRadioButton overTheCounterRadioButton;
+    private JRadioButton bankTransferRadioButton;
     private JRadioButton creditCardRadioButton;
     private JRadioButton GCashRadioButton;
     private String cinemaHallCode;
@@ -33,7 +33,7 @@ public class ConfirmPurchase {
     private double ticketsTotalPrice;
     private double moviePrice;
     private int paymentID;
-    private String[] paymentMethods = {"COUNTER","CREDIT","GCASH"};
+    private String[] paymentMethods = {"BANK","CREDIT","GCASH"};
     private int paymentMethodInt=0;
     private double ticketDiscount;
 
@@ -180,7 +180,7 @@ public class ConfirmPurchase {
                 }
             }
         });
-        overTheCounterRadioButton.addActionListener(new ActionListener() {
+        bankTransferRadioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 paymentMethodInt=0;

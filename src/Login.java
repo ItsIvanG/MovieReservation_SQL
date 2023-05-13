@@ -66,7 +66,7 @@ public class Login {
                 h.accountid=rs.getString("account_id");
 
                 h.seeMovieMenu(h);
-                h.checkLoginStatus(h);
+                h.checkLoginStatus();
 
                 found=true;
             }

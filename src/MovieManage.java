@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MovieManage {
@@ -22,10 +23,12 @@ public class MovieManage {
     private JButton deleteButton;
     private JButton browseIconButton;
     private JButton applyButton;
+    private JComboBox ratingBox;
     private List<String> movieList = new ArrayList<>();
     private File moviePoster;
     private String moviePosterURL;
     private byte[] moviePosterByte;
+    private List<String> ratingList = new ArrayList<>(Arrays.asList("G", "PG", "PG-13", "R-18"));
     public MovieManage(Header h){
         System.out.println("HEADER: "+h);
 
@@ -35,6 +38,7 @@ public class MovieManage {
                 h.seeMovieMenu(h);
             }
         });
+
 
         try{
             Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
@@ -103,7 +107,7 @@ public class MovieManage {
 
                     try{
                         Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
-                        PreparedStatement pst = conn.prepareStatement("update movie set movie_name=?, movie_description=?, movie_price=?, duration_minutes=?, movie_poster=? where movie_id=?");
+                        PreparedStatement pst = conn.prepareStatement("update movie set movie_name=?, movie_description=?, movie_price=?, duration_minutes=?, movie_poster=?, movie_rating=? where movie_id=?");
                         pst.setString(1, movieTextField.getText());
                         pst.setString(2, movieDescField.getText());
                         pst.setDouble(3, Double.parseDouble(moviePriceField.getText()));
@@ -119,7 +123,9 @@ public class MovieManage {
                         moviePosterByte=bos.toByteArray();
 
                         pst.setBytes(5,moviePosterByte); ////MOVIE POSTER
-                        pst.setString(6, movieCodeField.getText());
+                        pst.setString(6, (String) ratingBox.getSelectedItem());
+                        pst.setString(7, movieCodeField.getText());
+
                         pst.execute();
                         JOptionPane.showMessageDialog(null, "Movie code already exists! Updating existing record.");
                     } catch (Exception x){
@@ -129,7 +135,7 @@ public class MovieManage {
                 } else{///////////////////////////INSERT NEW
                     try{
                         Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
-                        PreparedStatement pst = conn.prepareStatement("insert into movie(movie_name, movie_description, movie_price, duration_minutes, movie_poster, movie_id) values(?,?,?,?,?,?)");
+                        PreparedStatement pst = conn.prepareStatement("insert into movie(movie_name, movie_description, movie_price, duration_minutes, movie_poster, movie_id,movie_rating) values(?,?,?,?,?,?,?)");
                         pst.setString(1, movieTextField.getText());
                         pst.setString(2, movieDescField.getText());
                         pst.setDouble(3, Double.parseDouble(moviePriceField.getText()));
@@ -145,6 +151,7 @@ public class MovieManage {
 
                         pst.setBytes(5,moviePosterByte); ////MOVIE POSTER
                         pst.setString(6, movieCodeField.getText());
+                        pst.setString(7, (String) ratingBox.getSelectedItem());
                         pst.execute();
                         JOptionPane.showMessageDialog(null, "Movie code does not exist! Inserting new record.");
                         h.seeMovieManager();
@@ -174,6 +181,12 @@ public class MovieManage {
                 }
             }
         });
+        ratingBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println(ratingBox.getSelectedItem());
+            }
+        });
     }
     public void viewMovieDetails(String id){
         try{
@@ -187,6 +200,7 @@ public class MovieManage {
                 moviePriceField.setText(rs.getString("movie_price"));
                 movieDurationField.setText(rs.getString("duration_minutes"));
                 movieCodeField.setText(rs.getString("movie_id"));
+                ratingBox.setSelectedIndex(ratingList.indexOf(rs.getString("movie_rating")));
 //                moviePosterLabel.setIcon(new ImageIcon(rs.getString("movie_poster")));
 
 
