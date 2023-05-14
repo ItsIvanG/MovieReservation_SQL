@@ -2,10 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Header {
@@ -17,10 +14,8 @@ public class Header {
     private JButton signOutButton;
     private JButton myTicketsButton;
     private JButton myPurchasesButton;
-    private JButton manageMoviesButton;
-    private JButton manageShowsButton;
-    private JButton manageHallsButton;
     private JButton viewProfileButton;
+    private JButton adminControlsButton;
 
     public String movieCode;
     public String customerEmail="";
@@ -33,6 +28,7 @@ public class Header {
     public boolean isAdmin=false;
     public JFrame frame;
     public String accountid;
+    private JPopupMenu popup;
 
 
     public static void setUIFont(javax.swing.plaf.FontUIResource f) {
@@ -45,6 +41,7 @@ public class Header {
         }
     }
     public Header() {
+
 
 
 //        try {
@@ -73,7 +70,7 @@ public class Header {
 
 
 //        UIManager.put("Panel.background", Color.white);
-
+        initalizeAdminControls();
         Header h = this;
 
         Login loginstart = new Login(h);
@@ -126,28 +123,17 @@ public class Header {
                 seePurchases(h);
             }
         });
-        manageMoviesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                seeMovieManager();
-            }
-        });
-        manageShowsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                seeShowManager();
-            }
-        });
-        manageHallsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                seeHallManager();
-            }
-        });
+
         viewProfileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 seeAccount();
+            }
+        });
+        adminControlsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                popup.show(frame, adminControlsButton.getX(), adminControlsButton.getY());
             }
         });
     }
@@ -218,13 +204,11 @@ public class Header {
             viewProfileButton.setVisible(true);
         }
         if(isAdmin){
-            manageHallsButton.setVisible(true);
-            manageMoviesButton.setVisible(true);
-            manageShowsButton.setVisible(true);
+            adminControlsButton.setVisible(true);
+
         }else{
-            manageHallsButton.setVisible(false);
-            manageMoviesButton.setVisible(false);
-            manageShowsButton.setVisible(false);
+            adminControlsButton.setVisible(false);
+
         }
     }
 
@@ -266,6 +250,46 @@ public class Header {
         this.contentPanel.add(new HallManager(this).panel);
         this.contentPanel.revalidate();
         this.contentPanel.repaint();
+    }
+    private void initalizeAdminControls(){
+        popup = new JPopupMenu();
+
+        JMenuItem menuItem = new JMenuItem("Manage movies", new ImageIcon("src/1x/Asset 5.png"));
+        menuItem.setBackground(Color.decode("#383639"));
+        menuItem.setForeground(Color.WHITE);
+        menuItem.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                seeMovieManager();
+            }
+        });
+
+        popup.add(menuItem);
+
+        menuItem = new JMenuItem("Manage cinema halls", new ImageIcon("src/1x/Asset 4.png"));
+        menuItem.setBackground(Color.decode("#383639"));
+        menuItem.setForeground(Color.WHITE);
+        menuItem.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                seeHallManager();
+            }
+        });
+
+        popup.add(menuItem);
+
+        menuItem = new JMenuItem("Manage show times", new ImageIcon("src/1x/Asset 3.png"));
+        menuItem.setBackground(Color.decode("#383639"));
+        menuItem.setForeground(Color.WHITE);
+        menuItem.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                seeShowManager();
+            }
+        });
+
+        popup.add(menuItem);
+
     }
 }
 

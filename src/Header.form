@@ -3,14 +3,14 @@
   <grid id="27dc6" binding="panel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="1942" height="498"/>
+      <xy x="20" y="20" width="1980" height="498"/>
     </constraints>
     <properties>
       <background color="-396033"/>
     </properties>
     <border type="none"/>
     <children>
-      <grid id="26c00" layout-manager="GridLayoutManager" row-count="1" column-count="13" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="26c00" layout-manager="GridLayoutManager" row-count="1" column-count="11" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false">
@@ -38,7 +38,7 @@
           </component>
           <component id="e5a51" class="javax.swing.JButton" binding="signInButton">
             <constraints>
-              <grid row="0" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+              <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="-1" height="32"/>
               </grid>
             </constraints>
@@ -51,7 +51,7 @@
           </component>
           <component id="dbe3a" class="javax.swing.JButton" binding="registerButton" default-binding="true">
             <constraints>
-              <grid row="0" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+              <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="-1" height="32"/>
               </grid>
             </constraints>
@@ -64,7 +64,7 @@
           </component>
           <component id="72c0e" class="javax.swing.JButton" binding="signOutButton">
             <constraints>
-              <grid row="0" column="9" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+              <grid row="0" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="-1" height="32"/>
               </grid>
             </constraints>
@@ -77,7 +77,7 @@
           </component>
           <component id="7d6f7" class="javax.swing.JButton" binding="myTicketsButton" default-binding="true">
             <constraints>
-              <grid row="0" column="10" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+              <grid row="0" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
                 <minimum-size width="-1" height="32"/>
                 <maximum-size width="-1" height="32"/>
               </grid>
@@ -92,7 +92,7 @@
           </component>
           <component id="87f5a" class="javax.swing.JButton" binding="myPurchasesButton">
             <constraints>
-              <grid row="0" column="11" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+              <grid row="0" column="9" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
                 <minimum-size width="-1" height="32"/>
                 <maximum-size width="-1" height="32"/>
               </grid>
@@ -105,66 +105,21 @@
               <text value="My Purchases"/>
             </properties>
           </component>
-          <component id="21736" class="javax.swing.JButton" binding="manageShowsButton">
-            <constraints>
-              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false">
-                <minimum-size width="-1" height="32"/>
-                <maximum-size width="-1" height="32"/>
-              </grid>
-            </constraints>
-            <properties>
-              <background color="-13093319"/>
-              <font name="Inter" size="14" style="0"/>
-              <foreground color="-396033"/>
-              <icon value="1x/Asset 3.png"/>
-              <text value="Manage Shows"/>
-            </properties>
-          </component>
           <hspacer id="9b95f">
             <constraints>
-              <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
           </hspacer>
-          <component id="7cff3" class="javax.swing.JButton" binding="manageMoviesButton">
-            <constraints>
-              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false">
-                <minimum-size width="-1" height="32"/>
-                <maximum-size width="-1" height="32"/>
-              </grid>
-            </constraints>
-            <properties>
-              <background color="-13093319"/>
-              <font name="Inter" size="14" style="0"/>
-              <foreground color="-396033"/>
-              <icon value="1x/Asset 5.png"/>
-              <text value="Manage Movies"/>
-            </properties>
-          </component>
-          <component id="b5add" class="javax.swing.JButton" binding="manageHallsButton">
-            <constraints>
-              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false">
-                <minimum-size width="-1" height="32"/>
-                <maximum-size width="-1" height="32"/>
-              </grid>
-            </constraints>
-            <properties>
-              <background color="-13093319"/>
-              <font name="Inter" size="14" style="0"/>
-              <foreground color="-396033"/>
-              <icon value="1x/Asset 4.png"/>
-              <text value="Manage Halls"/>
-            </properties>
-          </component>
           <hspacer id="572dd">
             <constraints>
-              <grid row="0" column="12" row-span="1" col-span="1" vsize-policy="1" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
+              <grid row="0" column="10" row-span="1" col-span="1" vsize-policy="1" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="40" height="-1"/>
               </grid>
             </constraints>
           </hspacer>
           <component id="1fe32" class="javax.swing.JButton" binding="viewProfileButton">
             <constraints>
-              <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false">
+              <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false">
                 <maximum-size width="40" height="32"/>
               </grid>
             </constraints>
@@ -176,13 +131,26 @@
           </component>
           <component id="4f13" class="javax.swing.JLabel" binding="customerNameLabel">
             <constraints>
-              <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <font name="Inter" size="14" style="0"/>
               <foreground color="-461825"/>
               <horizontalAlignment value="4"/>
               <text value="Customer"/>
+            </properties>
+          </component>
+          <component id="ad71f" class="javax.swing.JButton" binding="adminControlsButton">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <minimum-size width="32" height="32"/>
+                <maximum-size width="32" height="32"/>
+              </grid>
+            </constraints>
+            <properties>
+              <background color="-13093319"/>
+              <icon value="1x/gear.png"/>
+              <text value=""/>
             </properties>
           </component>
         </children>
