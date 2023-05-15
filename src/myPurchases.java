@@ -64,7 +64,10 @@ public class myPurchases {
                 try {
                     // Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
                     Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
-                    PreparedStatement pst = conn.prepareStatement("select * from payment\n" +
+                    PreparedStatement pst = conn.prepareStatement("select payment.payment_id, payment.payment_datetime, payment.mode_of_payment," +
+                            "ticket.seat_id, ticket.ticket_type, show_time.show_date, show_time.show_time, movie.movie_name," +
+                            "movie.movie_price, cinema_room.cinema_description, cinema_room.cinema_rate from payment\n" +
+
                             "join ticket on ticket.Payment_ID=payment.payment_id\n" +
                             "join show_time on show_time.show_id=ticket.show_id\n" +
                             "join cinema_room on cinema_room.cinema_hallID=show_time.cinema_hallID\n" +
