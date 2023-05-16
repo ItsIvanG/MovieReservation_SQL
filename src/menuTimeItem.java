@@ -4,6 +4,6 @@ public class menuTimeItem {
     public JPanel panel;
     private JLabel timeLabel;
     menuTimeItem(String time){
-        timeLabel.setText(time);
+        timeLabel.setText(time+"zzz");
     }
 }
