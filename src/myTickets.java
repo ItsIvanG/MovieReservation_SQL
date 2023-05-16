@@ -25,7 +25,6 @@ public class myTickets {
     private JLabel showIDlabel;
     private JScrollPane ticketsScrollPane;
     private JPanel ticketListPanel;
-    private DefaultListModel<String> ticketListModel = new DefaultListModel<>();
     public List<Integer> ticketIDs=new ArrayList<Integer>();
     public List<myTickets_Item> ticketItemsArray=new ArrayList<myTickets_Item>();
     public List<String> ticketsMovies=new ArrayList<String>();
