@@ -2,9 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.*;
 
-import static java.awt.Label.CENTER;
 
 public class SeatButton {
     public int seatStatus=0;

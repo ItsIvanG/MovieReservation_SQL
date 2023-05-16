@@ -5,20 +5,6 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 
 public class dateTimeConvert {
-//    public static String toShortTime(String inputStr){
-//        String res="";
-////        System.out.println("CONVERTING "+inputStr.substring(11,13));
-//        System.out.println(Integer.parseInt(inputStr.substring(11,13)));
-//        if(Integer.parseInt(inputStr.substring(11,13))>12){
-//            int hour = Integer.parseInt(inputStr.substring(11,13))-12;
-//            res=hour+inputStr.substring(13,16)+" PM";
-//        }else{
-//            int hour = Integer.parseInt(inputStr.substring(11,13));
-//            res=hour+inputStr.substring(13,16)+" AM";
-//        }
-////        res=inputStr.substring(10,16)+" AM";
-//        return res;
-//    }
 
     public static String toShortTime(Time inputStr){
         String res="";
@@ -54,7 +40,7 @@ public class dateTimeConvert {
     }
 
     public static String minutesToHours(int t){
-        int hours = t / 60; //since both are ints, you get an int
+        int hours = t / 60;
         int minutes = t % 60;
         return String.format("%dh %02dm", hours, minutes);
     }

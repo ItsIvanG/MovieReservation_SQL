@@ -156,11 +156,6 @@ public class ConfirmPurchase {
                     for (String seats:
                          seats) {
 
-                        if(type.get(seatindex).equals("REG")){
-                            ticketDiscount=1;
-                        } else if (type.get(seatindex).equals("DISC")) {
-                            ticketDiscount=0.8;
-                        }
 
                         pst = conn.prepareStatement("insert into ticket(seat_id,show_id,payment_id,ticket_type) values (?,?,?,?)");
                         pst.setString(1,seats);

@@ -100,6 +100,16 @@ join show_time on ticket.Show_ID=show_time.show_id
 join movie on show_time.movie_id=movie.movie_id
 join cinema_room on show_time.Cinema_hallID=cinema_room.Cinema_hallID
 where payment.account_id=1
+order by payment.payment_datetime desc
+
+select payment.Payment_id, ticket.ticket_type, ticket.ticket_number,
+                ticket.seat_id, ticket.show_id, movie.movie_price, movie.movie_name, cinema_room.cinema_rate,
+                cinema_room.cinema_description, show_time.show_date, show_time.show_time from TICKET
+                join show_time on ticket.Show_ID=show_time.show_id
+                join movie on show_time.movie_id=movie.movie_id
+                join cinema_room on show_time.Cinema_hallID=cinema_room.Cinema_hallID
+                join payment on ticket.Payment_ID=payment.payment_id where payment.account_id=1
+                order by payment.payment_datetime desc
 
 
 --GET MY PAYMENTS
@@ -110,6 +120,16 @@ join show_time on show_time.show_id=ticket.show_id
 join cinema_room on cinema_room.cinema_hallID=show_time.cinema_hallID
 join movie on movie.movie_id=show_time.movie_id
 where payment.payment_id=4
+
+select payment.payment_id, payment.payment_datetime, payment.mode_of_payment,
+                ticket.seat_id, ticket.ticket_type, show_time.show_date, show_time.show_time, movie.movie_name,
+                movie.movie_price, cinema_room.cinema_description, cinema_room.cinema_rate from payment
+                join ticket on ticket.Payment_ID=payment.payment_id
+                join show_time on show_time.show_id=ticket.show_id
+                join cinema_room on cinema_room.cinema_hallID=show_time.cinema_hallID
+                join movie on movie.movie_id=show_time.movie_id
+                where payment.payment_id=1
+
 
 alter table ticket
 drop column ticket_price

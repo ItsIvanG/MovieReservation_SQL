@@ -411,13 +411,6 @@ public class MovieDetails {
             currentSeat++;
             currentSeatReset++;
         }
-//                for (int i = 0; i < noOfSeats/seatsPerRow; i++) {
-//                    for (int x = 0; x < seatsPerRow; x++) {
-//
-//                        seatsPanel.add(new SeatButton(seatIDdebug,m, ShowID).panel);
-//                        System.out.println(seatIDdebug+" added");
-//                    }
-//                }
 
         seatsPanel.revalidate();
         seatsPanel.repaint();

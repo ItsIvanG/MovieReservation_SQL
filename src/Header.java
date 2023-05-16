@@ -75,7 +75,7 @@ public class Header {
 
         Login loginstart = new Login(h);
         ///------------------------------------/AUTOLOGIN
-        loginstart.tryLogin(h, "ivan.gonzales@gmail.com","pogi");
+//        loginstart.tryLogin(h, "ivan.gonzales@gmail.com","pogi");
 
 
 

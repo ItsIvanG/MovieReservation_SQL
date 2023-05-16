@@ -112,7 +112,6 @@ public class editShowDialog extends JDialog {
     }
 
     private void onOK() {
-        // add your code here
         dispose();
     }
 
@@ -127,14 +126,7 @@ public class editShowDialog extends JDialog {
                 System.out.println(e.getMessage());
             }
         }
-        // add your code here if necessary
         dispose();
     }
 
-//    public static void main(String[] args) {
-//        editShowDialog dialog = new editShowDialog();
-//        dialog.pack();
-//        dialog.setVisible(true);
-//        System.exit(0);
-//    }
 }

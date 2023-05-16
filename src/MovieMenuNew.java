@@ -24,18 +24,9 @@ public class MovieMenuNew {
 
 
         h=x;
-//        moviesPanelGrid.setBorder(BorderFactory.createEmptyBorder(30,30,30,30));
         moviesPanelGrid.setLayout(new GridLayout(0,2));
 
 
-//        frame.setLayout(new GridLayout(0,2));
-//
-//        frame.setContentPane(panel);
-//        frame.setSize(1000,800);
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.setTitle("Now Showing");
-//        frame.setVisible(true);
-//        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         try{
             Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
 
@@ -67,7 +58,7 @@ public class MovieMenuNew {
 
 
 
-                moviesPanelGrid.add(new MovieItem(rs.getString(2),"<html>"+rs.getString(3)+"</html>",rs.getString(1), h,rs.getInt("duration_minutes"),rs.getString("movie_rating")).movieItemPanel);
+                moviesPanelGrid.add(new MovieItem(rs.getString(2),"<html>"+rs.getString(3)+"</html>",rs.getString(1), h,rs.getInt("duration_minutes"),rs.getString("movie_rating"), new utilToSqlDate().convertJavaDateToSqlDate(date)).movieItemPanel);
                 System.out.println("\n"+rs.getString(1)+"\t"+rs.getString(2)+"\t"+rs.getString(3)+"\t"+rs.getString(4));
 
             }

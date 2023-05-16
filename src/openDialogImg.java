@@ -5,18 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.filechooser.FileFilter;
 
 public class openDialogImg {
-//    public static void main(String[] args) {
-//        createWindow();
-//    }
 
-//    private static void createWindow() {
-//        JFrame frame = new JFrame("Swing Tester");
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        createUI(frame);
-//        frame.setSize(560, 200);
-//        frame.setLocationRelativeTo(null);
-//        frame.setVisible(true);
-//    }
 
     public static File openDialog( JFrame frame, File retain) {
         JFileChooser fileChooser = new JFileChooser();
@@ -26,7 +15,6 @@ public class openDialogImg {
         int option = fileChooser.showOpenDialog(frame);
         if (option == JFileChooser.APPROVE_OPTION) {
             System.out.println("ACCEPTED");
-//            return fileChooser.getSelectedFile().getPath();
             return fileChooser.getSelectedFile();
         }
 

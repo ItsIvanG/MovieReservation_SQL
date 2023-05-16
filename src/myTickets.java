@@ -154,44 +154,7 @@ public class myTickets {
                 h.seeMovieMenu(h);
             }
         });
-       /* ticketList.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
 
-                ticketPanel.setVisible(true);
-
-                ticketMovieLabel.setText(ticketsMovies.get(ticketList.getSelectedIndex()));
-                ticketCinemaLabel.setText(ticketsCinemas.get(ticketList.getSelectedIndex()));
-                ticketDateTimeLabel.setText(ticketsDateTime.get(ticketList.getSelectedIndex()));
-                ticketSeatLabel.setText(ticketsSeats.get(ticketList.getSelectedIndex()));
-
-                ticketFullNameLabel.setText(h.customerName);
-                ticketEmailLabel.setText(h.customerEmail);
-                ticketContactLabel.setText(h.customerContactNo);
-
-
-                ticketIDLabel.setText("Ticket ID: "+ticketIDs.get(ticketList.getSelectedIndex()));
-                ticketPurchaseIDlabel.setText("Purchase ID: "+ticketsPurchaseIDs.get(ticketList.getSelectedIndex()));
-                ticketPriceLabel.setText("Ticket Price: ₱"+ticketsPrices.get(ticketList.getSelectedIndex()));
-                showIDlabel.setText("Show ID: "+showIDs.get(ticketList.getSelectedIndex()));
-
-                try{
-                    // Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-                    Connection conn = DriverManager.getConnection(connectionClass.connectionString, connectionClass.username,connectionClass.password);
-                    PreparedStatement pst = conn.prepareStatement("Select * from payment where payment_id=?");
-                    pst.setString(1,ticketsPurchaseIDs.get(ticketList.getSelectedIndex()));
-                    ResultSet rs = pst.executeQuery();
-                    while (rs.next()) {
-                        ticketPurchaseDateTimeLabel.setText(rs.getString("Payment_datetime"));
-                        ticketPurchaseMethodLabel.setText(rs.getString("mode_of_payment"));
-
-                    }
-                }catch (Exception x){
-                    System.out.println(x.getMessage());
-                }
-
-            }
-        });*/
 
     }
     void seeTicketDetails(int i){
